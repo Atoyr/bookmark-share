@@ -9,6 +9,7 @@ const config: Config = {
   bracketSpacing: true,
   vueIndentScriptAndStyle: true,
   singleAttributePerLine: true,
+  plugins: ['prettier-plugin-tailwindcss'],
 };
 
 export default config;
