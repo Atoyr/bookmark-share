@@ -8,6 +8,7 @@ const config: Config = {
   trailingComma: 'es5',
   bracketSpacing: true,
   vueIndentScriptAndStyle: true,
+  singleAttributePerLine: true,
 };
 
 export default config;
