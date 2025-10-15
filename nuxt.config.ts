@@ -10,7 +10,11 @@ export default defineNuxtConfig({
     plugins: [tailwindcss()],
   },
   shadcn: {
-    prefix: '',
+    prefix: 'sh-',
     componentDir: './app/components/ui',
   },
+  components: [
+    { path: '~/components', ignore: ['~/components/ui'] },
+    { path: '~/components/ui', pathPrefix: false },
+  ],
 });
