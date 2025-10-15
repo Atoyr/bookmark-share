@@ -3,32 +3,32 @@
 </script>
 
 <template>
-  <SidebarProvider :defaultOpen="defaultOpen">
-    <Sidebar>
-      <SidebarHeader>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                  <SidebarMenuButton>
+  <ShadSidebarProvider :defaultOpen="defaultOpen">
+    <ShadSidebar>
+      <ShadSidebarHeader>
+        <ShadSidebarMenu>
+          <ShadSidebarMenuItem>
+            <ShadDropdownMenu>
+              <ShadDropdownMenuTrigger asChild>
+                  <ShadSidebarMenuButton>
                     Select Workspace
                     <ChevronDown class="ml-auto" />
-                  </SidebarMenuButton>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent class="w-[--bits-dropdown-menu-anchor-width]">
-                <DropdownMenuItem>
+                  </ShadSidebarMenuButton>
+              </ShadDropdownMenuTrigger>
+              <ShadDropdownMenuContent class="w-[--bits-dropdown-menu-anchor-width]">
+                <ShadDropdownMenuItem>
                   <span>Acme Inc</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
+                </ShadDropdownMenuItem>
+                <ShadDropdownMenuItem>
                   <span>Acme Corp.</span>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </SidebarMenuItem>
-        </SidebarMenu>
-      </SidebarHeader>
-    </Sidebar>
+                </ShadDropdownMenuItem>
+              </ShadDropdownMenuContent>
+            </ShadDropdownMenu>
+          </ShadSidebarMenuItem>
+        </ShadSidebarMenu>
+      </ShadSidebarHeader>
+    </ShadSidebar>
     <slot />
-  </SidebarProvider>
+  </ShadSidebarProvider>
 
 </template>

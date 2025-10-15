@@ -1,35 +1,35 @@
 <template>
-  <SidebarGroup>
-    <SidebarGroupLabel>Platform</SidebarGroupLabel>
-    <SidebarMenu>
-      <Collapsible
+  <ShadSidebarGroup>
+    <ShadSidebarGroupLabel>Platform</ShadSidebarGroupLabel>
+    <ShadSidebarMenu>
+      <ShadCollapsible
         v-for="item in items"
         :key="item.title"
         as-child
         :default-open="item.isActive"
         class="group/collapsible"
       >
-        <SidebarMenuItem>
-          <CollapsibleTrigger as-child>
-            <SidebarMenuButton :tooltip="item.title">
+        <ShadSidebarMenuItem>
+          <ShadCollapsibleTrigger as-child>
+            <ShadSidebarMenuButton :tooltip="item.title">
               <component :is="item.icon" v-if="item.icon" />
               <span>{{ item.title }}</span>
-              <ChevronRight class="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
-            </SidebarMenuButton>
-          </CollapsibleTrigger>
-          <CollapsibleContent>
-            <SidebarMenuSub>
-              <SidebarMenuSubItem v-for="subItem in item.items" :key="subItem.title">
-                <SidebarMenuSubButton as-child>
+              <ShadChevronRight class="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+            </ShadSidebarMenuButton>
+          </ShadCollapsibleTrigger>
+          <ShadCollapsibleContent>
+            <ShadSidebarMenuSub>
+              <ShadSidebarMenuSubItem v-for="subItem in item.items" :key="subItem.title">
+                <ShadSidebarMenuSubButton as-child>
                   <a :href="subItem.url">
                     <span>{{ subItem.title }}</span>
                   </a>
-                </SidebarMenuSubButton>
-              </SidebarMenuSubItem>
-            </SidebarMenuSub>
-          </CollapsibleContent>
-        </SidebarMenuItem>
-      </Collapsible>
-    </SidebarMenu>
-  </SidebarGroup>
+                </ShadSidebarMenuSubButton>
+              </ShadSidebarMenuSubItem>
+            </ShadSidebarMenuSub>
+          </ShadCollapsibleContent>
+        </ShadSidebarMenuItem>
+      </ShadCollapsible>
+    </ShadSidebarMenu>
+  </ShadSidebarGroup>
 </template>

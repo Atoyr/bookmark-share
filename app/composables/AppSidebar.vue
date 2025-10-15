@@ -8,17 +8,17 @@
 </script>
 
 <template>
-  <Sidebar v-bind="props">
-    <SidebarHeader>
+  <ShadSidebar v-bind="props">
+    <ShadSidebarHeader>
       <p>foo</p>
-    </SidebarHeader>
-    <SidebarContent>
-      <NavMain :items="data.navMain" />
-      <NavProjects :projects="data.projects" />
-    </SidebarContent>
-    <SidebarFooter>
-      <NavUser :user="data.user" />
-    </SidebarFooter>
-    <SidebarRail />
-  </Sidebar>
+    </ShadSidebarHeader>
+    <ShadSidebarContent>
+      <ShadNavMain :items="data.navMain" />
+      <ShadNavProjects :projects="data.projects" />
+    </ShadSidebarContent>
+    <ShadSidebarFooter>
+      <ShadNavUser :user="data.user" />
+    </ShadSidebarFooter>
+    <ShadSidebarRail />
+  </ShadSidebar>
 </template>

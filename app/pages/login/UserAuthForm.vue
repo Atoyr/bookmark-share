@@ -1,8 +1,5 @@
 <script setup lang="ts">
   import { cn } from '@/lib/utils';
-  import { Button } from '@/components/ui/button';
-  import { Input } from '@/components/ui/input';
-  import { Label } from '@/components/ui/label';
 
   const isLoading = ref(false);
   async function onSubmit(event: Event) {
@@ -19,13 +16,13 @@
     <form @submit="onSubmit">
       <div class="grid gap-2">
         <div class="grid gap-1">
-          <Label
+          <ShadLabel
             class="sr-only"
             for="email"
           >
             Email
-          </Label>
-          <Input
+          </ShadLabel>
+          <ShadInput
             id="email"
             placeholder="name@example.com"
             type="email"
@@ -35,13 +32,13 @@
             :disabled="isLoading"
           />
         </div>
-        <Button :disabled="isLoading">
+        <ShadButton :disabled="isLoading">
           <LucideSpinner
             v-if="isLoading"
             class="mr-2 h-4 w-4 animate-spin"
           />
           Sign In with Email
-        </Button>
+        </ShadButton>
       </div>
     </form>
     <div class="relative">
@@ -52,12 +49,12 @@
         <span class="bg-background text-muted-foreground px-2"> Or continue with </span>
       </div>
     </div>
-    <Button
+    <ShadButton
       variant="outline"
       type="button"
       :disabled="isLoading"
     >
       GitHub
-    </Button>
+    </ShadButton>
   </div>
 </template>
