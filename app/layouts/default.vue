@@ -6,15 +6,16 @@
   <ShadSidebarProvider>
     <AppSidebar />
     <ShadSidebarInset>
-      <header class="flex sticky top-0 bg-background h-16 shrink-0 items-center gap-2 border-b px-4">
+      <header class="bg-background sticky top-0 flex h-16 shrink-0 items-center gap-2 border-b px-4">
         <ShadSidebarTrigger class="-ml-1" />
-        <ShadSeparator orientation="vertical" class="mr-2 h-4" />
+        <ShadSeparator
+          orientation="vertical"
+          class="mr-2 h-4"
+        />
         <ShadBreadcrumb>
           <ShadBreadcrumbList>
             <ShadBreadcrumbItem class="hidden md:block">
-              <ShadBreadcrumbLink href="#">
-                Building Your Application
-              </ShadBreadcrumbLink>
+              <ShadBreadcrumbLink href="#"> Building Your Application </ShadBreadcrumbLink>
             </ShadBreadcrumbItem>
             <ShadBreadcrumbSeparator class="hidden md:block" />
             <ShadBreadcrumbItem>
@@ -23,9 +24,9 @@
           </ShadBreadcrumbList>
         </ShadBreadcrumb>
       </header>
+      <main>
+        <slot />
+      </main>
     </ShadSidebarInset>
-    <main>
-      <slot />
-    </main>
   </ShadSidebarProvider>
 </template>
