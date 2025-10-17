@@ -3,9 +3,10 @@
 
 <template>
   <ShadSidebar>
-    <ShadSidebarHeader />
+    <ShadSidebarHeader>
+      <NavUser />
+    </ShadSidebarHeader>
     <ShadSidebarContent>
-      <ShadSidebarGroup />
       <ShadSidebarGroup />
     </ShadSidebarContent>
     <ShadSidebarFooter />
