@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Check, ChevronsUpDown, GalleryVerticalEnd } from "lucide-vue-next"
+  import { Check, ChevronsUpDown, GalleryVerticalEnd } from 'lucide-vue-next';
 </script>
 
 <template>
@@ -12,7 +12,9 @@ import { Check, ChevronsUpDown, GalleryVerticalEnd } from "lucide-vue-next"
             class="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
           >
             <!-- TODO: アバター -->
-            <div class="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
+            <div
+              class="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg"
+            >
               <GalleryVerticalEnd class="size-4" />
             </div>
             <div class="flex flex-col gap-0.5 leading-none">
@@ -25,7 +27,6 @@ import { Check, ChevronsUpDown, GalleryVerticalEnd } from "lucide-vue-next"
           class="w-[--reka-dropdown-menu-trigger-width]"
           align="start"
         >
-
           <!-- TODO: クリックしたときのメニュー -->
           <ShadDropdownMenuItem
             v-for="version in versions"
@@ -33,11 +34,13 @@ import { Check, ChevronsUpDown, GalleryVerticalEnd } from "lucide-vue-next"
             @select="selectedVersion = version"
           >
             v{{ version }}
-            <Check v-if="version === selectedVersion" class="ml-auto" />
+            <Check
+              v-if="version === selectedVersion"
+              class="ml-auto"
+            />
           </ShadDropdownMenuItem>
         </ShadDropdownMenuContent>
       </ShadDropdownMenu>
     </ShadSidebarMenuItem>
   </ShadSidebarMenu>
 </template>
-
