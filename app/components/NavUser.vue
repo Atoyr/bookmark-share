@@ -1,5 +1,8 @@
 <script setup lang="ts">
   import { Check, ChevronsUpDown, GalleryVerticalEnd } from 'lucide-vue-next';
+  import { useUser } from '@/composables/useUser';
+
+  const { user } = useUser();
 </script>
 
 <template>
@@ -18,7 +21,7 @@
               <GalleryVerticalEnd class="size-4" />
             </div>
             <div class="flex flex-col gap-0.5 leading-none">
-              <span class="font-semibold">name</span>
+              <span class="font-semibold">{{user.name}}</span>
             </div>
             <ChevronsUpDown class="ml-auto" />
           </ShadSidebarMenuButton>
