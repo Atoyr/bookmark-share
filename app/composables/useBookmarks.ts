@@ -1,4 +1,4 @@
-import type { bookmark } from '~/types/bookmark';
+import type { Bookmark } from '@/types/Bookmark';
 
 export const useBookmarks = () => {
   const bookmarks = useState(
@@ -8,7 +8,7 @@ export const useBookmarks = () => {
         { id: '1', title: 'googole', url: 'https://www.google.com' },
         { id: '2', title: 'yahoo', url: 'https://www.yahoo.com' },
         { id: '3', title: 'msn', url: 'https://www.msn.com' },
-      ] as bookmark[]
+      ] as Bookmark[]
   );
 
   console.log('useBookmarks called');
