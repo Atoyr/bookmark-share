@@ -1,7 +1,7 @@
 import type { Bookmark } from '@/types/Bookmark';
 import type { ColumnDef } from '@tanstack/vue-table';
 import { h } from 'vue';
-import Tag from '@/components/Tag.vue';
+import { Tag } from '@/components/tag';
 
 export const columns: ColumnDef<Bookmark>[] = [
   {
@@ -18,7 +18,7 @@ export const columns: ColumnDef<Bookmark>[] = [
       return h(
         'div',
         { class: 'flex gap-1' },
-        tags.map((tag) => h(Tag, { name: tag.name }))
+        tags.map((tag) => h(Tag, { name: tag.name, color: tag.color }))
       );
     },
   },

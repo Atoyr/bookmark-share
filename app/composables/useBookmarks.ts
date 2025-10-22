@@ -5,15 +5,15 @@ export const useBookmarks = () => {
     'bookmarks',
     () =>
       [
-        { id: '1', title: 'googole', url: 'https://www.google.com', tags: [{ id: 'a', name: 'tag1' }] },
-        { id: '2', title: 'yahoo', url: 'https://www.yahoo.com', tags: [{ id: 'b', name: 'tag2' }] },
+        { id: '1', title: 'googole', url: 'https://www.google.com', tags: [{ id: 'a', name: 'tag1', color: 'red' }] },
+        { id: '2', title: 'yahoo', url: 'https://www.yahoo.com', tags: [{ id: 'b', name: 'tag2', color: 'blue' }] },
         {
           id: '3',
           title: 'msn',
           url: 'https://www.msn.com',
           tags: [
-            { id: 'a', name: 'tag1' },
-            { id: 'b', name: 'tag2' },
+            { id: 'a', name: 'tag1', color: 'red' },
+            { id: 'b', name: 'tag2', color: 'blue' },
           ],
         },
       ] as Bookmark[]
