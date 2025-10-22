@@ -2,14 +2,29 @@ import type { Bookmark } from '@/types/Bookmark';
 import type { ColumnDef } from '@tanstack/vue-table';
 import { h } from 'vue';
 import { Tag } from '@/components/tag';
+import { ExternalLink } from 'lucide-vue-next';
 
 export const columns: ColumnDef<Bookmark>[] = [
   {
     id: 'id',
     accessorKey: 'title',
-  },
-  {
-    accessorKey: 'url',
+    cell: ({ row }) => {
+      const title = row.original.title;
+      const url = row.original.url;
+      return h('div', { class: 'flex items-center gap-2' }, [
+        h('span', { class: 'flex-auto' }, title),
+        h(
+          'a',
+          {
+            href: url,
+            target: '_blank',
+            rel: 'noopener noreferrer',
+            class: 'text-primary hover:text-primary/80 flex-none',
+          },
+          [h(ExternalLink, { class: 'h-4 w-4' })]
+        ),
+      ]);
+    },
   },
   {
     accessorKey: 'tags',
