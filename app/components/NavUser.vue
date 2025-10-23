@@ -15,11 +15,7 @@
             class="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
           >
             <!-- TODO: アバター -->
-            <div
-              class="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg"
-            >
-              <GalleryVerticalEnd class="size-4" />
-            </div>
+            <Avatar fallback="CN" />
             <div class="flex flex-col gap-0.5 leading-none">
               <span class="font-semibold">{{user.name}}</span>
             </div>
