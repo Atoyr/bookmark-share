@@ -4,7 +4,7 @@
   import { avatarRootVariants, avatarFallbackVariants } from '.';
 
   const props = defineProps<{
-    src: string;
+    src?: string;
     size: avatarRootVariants['size'];
     crossOrigin?: string;
     referrerPolicy?: string;
@@ -21,17 +21,18 @@
     :class="cn(avatarRootVariants({ size: props.size }))"
   >
   <AvatarImage
+    v-if="props.src"
     data-slot="avatar-image"
     :src="props.src"
-    :crossOrigin="props.crossOrigin ?? ''"
-    :referrerPolicy="props.referrerPolicy ?? ''"
+    :cross-origin="props.crossOrigin"
+    :referrer-policy="props.referrerPolicy"
     class="aspect-square size-full"
   />
 
   <AvatarFallback
     data-slot="avatar-fallback"
-    :delayMs="props.delayMs"
-    :class="cn(avatarFallbackVariants({ faollbackColor: props.fallbackColor, size: props.size }))"
+    :delay-ms="props.delayMs"
+    :class="cn(avatarFallbackVariants({ fallbackColor: props.fallbackColor, size: props.size }))"
   >
     <span v-if="props.fallback">{{ props.fallback }}</span>
     <slot />
