@@ -168,34 +168,44 @@ describe('Avatar Component', () => {
       });
 
       const avatarRoot = wrapper.find('[data-test="avatar-root"]');
-      expect(avatarRoot.classes()).toContain('avatar-root-lg');
+      expect(avatarRoot.classes()).toContain('size-12');
+      expect(avatarRoot.classes()).toContain('rounded-lg');
     });
 
     it('fallbackColor プロパティに応じた AvatarFallback のクラスが適用されること', () => {
       wrapper = mount(Avatar, {
         props: {
           ...defaultProps,
-          fallbackColor: 'primary',
+          fallbackColor: 'gray',
         },
       });
 
       const avatarFallback = wrapper.find('[data-test="avatar-fallback"]');
-      expect(avatarFallback.classes()).toContain('avatar-fallback-primary-md');
+      expect(avatarFallback.classes()).toContain('bg-slate-200');
+      expect(avatarFallback.classes()).toContain('dark:bg-slate-700');
+      expect(avatarFallback.classes()).toContain('text-black');
+      expect(avatarFallback.classes()).toContain('dark:text-white');
     });
 
     it('複数のサイズバリエーションが正しく適用されること', () => {
-      const sizes = ['sm', 'md', 'lg', 'xl'];
+      const sizes = [
+        { size:'sm', classes:['size-6', 'rounded-sm']},
+        { size:'md', classes:['size-8', 'rounded-md']},
+        { size:'lg', classes:['size-12', 'rounded-lg']}
+        ];
       
       sizes.forEach((size) => {
         wrapper = mount(Avatar, {
           props: {
             ...defaultProps,
-            size: size as any,
+            size: size.size as any,
           },
         });
 
         const avatarRoot = wrapper.find('[data-test="avatar-root"]');
-        expect(avatarRoot.classes()).toContain(`avatar-root-${size}`);
+        size.classes.forEach((cls) => {
+          expect(avatarRoot.classes()).toContain(cls);
+        });
       });
     });
   });

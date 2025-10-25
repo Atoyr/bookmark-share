@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import { AvatarRoot, AvatarImage, AvatarFallback } from 'reka-ui';
   import { cn } from '@/lib/utils';
-  import { avatarRootVariants, avatarFallbackVariants } from '.';
+  import { avatarRootVariants, avatarFallbackVariants } from './avatarVariants.ts';
 
   const props = defineProps<{
     src?: string;

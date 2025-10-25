@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import type { HTMLAttributes } from 'vue';
   import type { TagVariants } from '.';
-  import { tagVariants } from '.';
+  import { tagVariants } from './tagVariants.ts';
   import { cn } from '@/lib/utils';
 
   const props = defineProps<{

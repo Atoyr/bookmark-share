@@ -1,8 +1,6 @@
 import type { VariantProps } from 'class-variance-authority';
 import { cva } from 'class-variance-authority';
 
-export { default as Tag } from './Tag.vue';
-
 export const tagVariants = cva(
   [
     'data-[state=active]:ring-ring',
