@@ -1,5 +1,7 @@
 <script setup lang="ts">
   import AppSidebar from '@/components/AppSidebar.vue';
+  import { useBreadcrumb } from '~/composables/useBreadcrumb';
+  const breadcrumb = useBreadcrumb();
 </script>
 
 <template>
@@ -14,13 +16,28 @@
         />
         <ShadBreadcrumb>
           <ShadBreadcrumbList>
-            <ShadBreadcrumbItem class="hidden md:block">
-              <ShadBreadcrumbLink href="#"> Building Your Application </ShadBreadcrumbLink>
-            </ShadBreadcrumbItem>
-            <ShadBreadcrumbSeparator class="hidden md:block" />
-            <ShadBreadcrumbItem>
-              <ShadBreadcrumbPage>Data Fetching</ShadBreadcrumbPage>
-            </ShadBreadcrumbItem>
+            <template
+              v-for="(item, index) in breadcrumb"
+              :key="index"
+            >
+              <ShadBreadcrumbItem :class="{ 'hidden md:block': index < breadcrumb.length - 1 }">
+                <template v-if="item.href">
+                  <ShadBreadcrumbLink :href="item.href" :class="{ 'hidden md:block': index < breadcrumb.length - 1 }">
+                    {{ item.label }}
+                  </ShadBreadcrumbLink>
+                </template>
+                <template v-else>
+                  <ShadBreadcrumbPage :class="{ 'hidden md:block': index < breadcrumb.length - 1 }">
+                    {{ item.label }}
+                  </ShadBreadcrumbPage>
+                </template>
+              </ShadBreadcrumbItem>
+
+              <ShadBreadcrumbSeparator
+                v-if="index < breadcrumb.length - 1"
+                class="hidden md:block"
+              />
+            </template>
           </ShadBreadcrumbList>
         </ShadBreadcrumb>
       </header>

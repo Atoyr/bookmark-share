@@ -1,7 +1,7 @@
 import type { Bookmark } from '@/types/Bookmark';
 import type { ColumnDef } from '@tanstack/vue-table';
 import { h } from 'vue';
-import { Tag } from '@/components/tag';
+import { default as Tag } from '@/components/tag/Tag.vue';
 import { ExternalLink } from 'lucide-vue-next';
 
 export const columns: ColumnDef<Bookmark>[] = [
