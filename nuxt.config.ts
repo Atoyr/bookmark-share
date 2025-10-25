@@ -4,6 +4,11 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
   css: ['~/assets/css/tailwind.css'],
+  components: {
+    dirs: [
+      { path: '~/app/components', extensions: ['.vue'], pathPrefix: false },
+    ],
+  },
 
   vite: {
     plugins: [tailwindcss()],
