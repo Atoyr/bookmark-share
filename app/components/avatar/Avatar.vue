@@ -39,17 +39,3 @@
   </AvatarFallback>
   </AvatarRoot>
 </template>
-
-<!--
-<template>
-  <ShadAvater
-    class="bg-blackA3 inline-flex h-[45px] w-[45px] items-center justify-center overflow-hidden rounded-md border align-middle select-none dark:border-stone-700"
-  >
-    <ShadAvatarFallback
-      class="text-grass11 flex h-full w-full items-center justify-center bg-white text-sm leading-1 font-medium dark:bg-stone-800 dark:text-stone-300"
-    >
-      {{ fallback }}
-    </ShadAvatarFallback>
-  </ShadAvater>
-</template>
--->
