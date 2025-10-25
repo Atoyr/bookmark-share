@@ -5,10 +5,10 @@
 
   const props = defineProps<{
     src?: string;
-    size: avatarRootVariants['size'];
+    size?: avatarRootVariants['size'];
     crossOrigin?: string;
     referrerPolicy?: string;
-    delayMs: number;
+    delayMs?: number;
     fallback?: string;
     fallbackColor?: avatarFallbackVariants['color'];
   }>();
