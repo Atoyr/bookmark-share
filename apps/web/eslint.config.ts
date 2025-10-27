@@ -1,21 +1,11 @@
-import globals from 'globals';
-import tseslint from 'typescript-eslint';
-import pluginVue from 'eslint-plugin-vue';
-import json from '@eslint/json';
-import css from '@eslint/css';
+// @ts-check
+import { nuxtJsConfig } from "@repo/eslint-config/nuxt-js";
 import { defineConfig } from 'eslint/config';
-import eslintConfigPrettier from 'eslint-config-prettier/flat';
 
 export default defineConfig([
-  eslintConfigPrettier,
+  ...nuxtJsConfig,
   {
-    files: ['**/*.{js,mjs,cjs,ts,mts,cts,vue}'],
-    languageOptions: { globals: { ...globals.browser, ...globals.node } },
+    ignores: [".output", ".turbo", ".nuxt"],
   },
-  tseslint.configs.recommended,
-  pluginVue.configs['flat/essential'],
-  { files: ['**/*.vue'], languageOptions: { parserOptions: { parser: tseslint.parser } } },
-  { files: ['**/*.json'], plugins: { json }, language: 'json/json' },
-  { files: ['**/*.css'], plugins: { css }, language: 'css/css' },
-  { ignores: ['.vscode/**', 'app/components/ui'] },
 ]);
+

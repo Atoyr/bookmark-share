@@ -5,8 +5,7 @@
     "build": {
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
-      "outputs": [".nuxt/**", "!.nuxt/cache/**"],
-      "env": ["NUXT_TELEMETRY_DISABLED"]
+      "outputs": [".nuxt/**", "!.nuxt/cache/**"]
     },
     "lint": {
       "dependsOn": ["^lint"]
