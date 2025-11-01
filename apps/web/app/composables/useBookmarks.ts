@@ -19,8 +19,15 @@ export const useBookmarks = () => {
       ] as Bookmark[]
   );
 
+  async function fetchBookmarks() {
+    const data = await $fetch('/api/bookmarks');
+
+    return bookmarks;
+  }
+
   console.log('useBookmarks called');
   return {
+    fetchBookmarks,
     bookmarks: readonly(bookmarks),
   };
 };
