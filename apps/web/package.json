@@ -12,7 +12,6 @@
     "prettier": "prettier . --write",
     "test": "vitest",
     "test:ui": "vitest --ui",
-    "test:coverage": "vitest --coverage",
     "test:watch": "vitest --watch"
   },
   "dependencies": {
@@ -36,8 +35,10 @@
     "@eslint/css": "^0.13.0",
     "@eslint/json": "^0.13.2",
     "@nuxt/test-utils": "^3.19.2",
-    "@vue/test-utils": "^2.4.6",
     "@repo/eslint-config": "workspace:*",
+    "@vitest/coverage-v8": "3.2.4",
+    "@vitest/ui": "3.2.4",
+    "@vue/test-utils": "^2.4.6",
     "eslint": "^9.37.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-vue": "^10.5.1",

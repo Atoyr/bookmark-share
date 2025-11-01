@@ -1,4 +1,4 @@
-import { defineConfig } from 'vitest/config';
+import { defineConfig, configDefaults } from 'vitest/config';
 import { defineVitestProject } from '@nuxt/test-utils/config';
 import { fileURLToPath } from 'node:url';
 
@@ -27,6 +27,11 @@ export default defineConfig({
         },
       }),
     ],
+    coverage: {
+      enabled: true,
+      reporter: ['text', 'json', 'html'],
+      exclude: [...configDefaults.exclude, 'nuxt.config.ts', 'app/components/ui/**', '**/*.mjs', '.nuxt/**'],
+    },
   },
   resolve: {
     alias: {
