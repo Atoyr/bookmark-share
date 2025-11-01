@@ -21,4 +21,7 @@ export default defineNuxtConfig({
      */
     componentDir: './app/components/ui',
   },
+  nitro: {
+    ignore: ['**/*.test.*', '**/*.spec.*', '**/__tests__/**', '**/__mocks__/**'],
+  },
 });
