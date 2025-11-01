@@ -8,9 +8,10 @@
       "outputs": [".nuxt/**", "!.nuxt/cache/**"]
     },
     "test": {
-      "dependsOn": ["^test"],
+      "dependsOn": ["^transit"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
-      "outputs": [".nuxt/**", "!.nuxt/cache/**"]
+      "outputs": ["coverage/**", "reports/**"],
+      "cache": false
     },
     "lint": {
       "dependsOn": ["^lint"]
@@ -21,6 +22,9 @@
     "dev": {
       "cache": false,
       "persistent": true
+    },
+    "transit": {
+      "dependsOn": ["^transit"]
     }
   }
 }
