@@ -1,16 +1,10 @@
 import { defineEventHandler } from 'h3';
 import { fetchBookmarks } from '../../services/bookmarkService';
+import { requireUser } from '../../auth/core/helpers';
 
 export default defineEventHandler(async (event) => {
-  // FIXME: 認証チェック
-  // const userId = event.context.auth?.userId;
-  //
-  // if (!userId) {
-  //   throw createError({
-  //     statusCode: 401,
-  //     statusMessage: 'Unauthorized'
-  //   });
-  // }
+  const user = await requireUser(event);
+  console.log('Authenticated user:', user);
 
   const bookmnarks = await fetchBookmarks();
 

@@ -9,7 +9,7 @@ export default defineNuxtConfig({
     plugins: [tailwindcss()],
   },
 
-  modules: ['shadcn-nuxt', '@nuxt/test-utils/module'],
+  modules: ['shadcn-nuxt', '@nuxt/test-utils/module', '@nuxtjs/supabase'],
   shadcn: {
     /**
      * Prefix for all the imported component
@@ -23,5 +23,9 @@ export default defineNuxtConfig({
   },
   nitro: {
     ignore: ['**/*.test.*', '**/*.spec.*', '**/__tests__/**', '**/__mocks__/**'],
+  },
+  supabase: {
+    // SSRでのCookie管理や自動リダイレクトを自前で制御したい場合
+    redirect: false,
   },
 });
