@@ -8,7 +8,6 @@ export default defineNuxtConfig({
   vite: {
     plugins: [tailwindcss()],
   },
-
   modules: ['shadcn-nuxt', '@nuxt/test-utils/module', '@nuxtjs/supabase'],
   shadcn: {
     /**
