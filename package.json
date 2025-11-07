@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "build": "turbo run build",
-    "dev": "turbo run dev",
+    "dev": "turbo run dev --parallel",
     "lint": "turbo run lint",
     "test": "turbo run test",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
@@ -18,5 +18,8 @@
   "packageManager": "pnpm@10.20.0",
   "engines": {
     "node": ">=18"
+  },
+  "dependencies": {
+    "cookie-es": "^2.0.0"
   }
 }

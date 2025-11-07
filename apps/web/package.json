@@ -35,7 +35,6 @@
     "@eslint/css": "^0.13.0",
     "@eslint/json": "^0.13.2",
     "@nuxt/test-utils": "^3.19.2",
-    "@nuxtjs/supabase": "^2.0.1",
     "@repo/eslint-config": "workspace:*",
     "@vitest/coverage-v8": "3.2.4",
     "@vitest/ui": "3.2.4",

@@ -1,12 +1,16 @@
 <script setup lang="ts">
-  import { useAuth } from '@/composables/useAuth';
-  const { loginWithGoogle } = useAuth();
-  const login = () => {
+onMounted(() => console.log('mounted'))
+  const handleLogin = () => {
     console.log('login');
-    loginWithGoogle();
   };
 </script>
 
 <template>
-  <ShadButton @click="login">Googleでログイン</ShadButton>
+  <button
+    variant="outline" @click="() => {
+    console.log('login');
+    }"
+  >
+  Googlelogin
+  </button>
 </template>
