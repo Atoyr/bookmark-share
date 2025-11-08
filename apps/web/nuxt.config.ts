@@ -4,6 +4,12 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
   css: ['~/assets/css/tailwind.css'],
+  runtimeConfig: {
+    public: {
+      SUPABASE_URL: process.env.PUBLIC_SUPABASE_URL,
+      SUPABASE_ANON_KEY: process.env.PUBLIC_SUPABASE_ANON_KEY,
+    },
+  },
 
   vite: {
     plugins: [tailwindcss()],
@@ -25,9 +31,5 @@ export default defineNuxtConfig({
     alias: {
       cookie: 'cookie-es', // サーバー（Nitro）側
     },
-  },
-  supabase: {
-    // SSRでのCookie管理や自動リダイレクトを自前で制御したい場合
-    redirect: false,
   },
 });
