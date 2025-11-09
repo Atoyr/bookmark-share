@@ -10,11 +10,19 @@ export default defineNuxtConfig({
       SUPABASE_ANON_KEY: process.env.PUBLIC_SUPABASE_ANON_KEY,
     },
   },
-
+  supabase: {
+    url: process.env.PUBLIC_SUPABASE_URL,
+    key: process.env.PUBLIC_SUPABASE_ANON_KEY,
+    redirectOptions: {
+      login: '/login',
+      callback: '/auth/callback',
+      exclude: ['/', '/bookmarks'],
+    },
+  },
   vite: {
     plugins: [tailwindcss()],
   },
-  modules: ['shadcn-nuxt', '@nuxt/test-utils/module'],
+  modules: ['shadcn-nuxt', '@nuxt/test-utils/module', '@nuxtjs/supabase'],
   shadcn: {
     /**
      * Prefix for all the imported component
@@ -33,3 +41,4 @@ export default defineNuxtConfig({
     },
   },
 });
+

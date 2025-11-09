@@ -1,3 +1,6 @@
+# memo
+https://note.com/brave_camel188/n/n9436a13854b6
+
 # Nuxt Minimal Starter
 
 Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
