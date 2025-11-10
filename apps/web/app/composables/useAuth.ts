@@ -7,7 +7,7 @@ export function useAuth() {
     await client.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: `${origin}/auth/callback`,
+        redirectTo: `${origin}/confirm`,
       },
     });
   }
