@@ -1,11 +1,11 @@
 <script setup lang="ts">
-  import { useAuth } from '@/composables/useAuth';
-  const { loginWithGoogle } = useAuth();
-  const handleLogin = () => {
-    loginWithGoogle();
-  };
+  definePageMeta({
+    layout: 'guest',
+  });
 </script>
 
 <template>
-  <ShadButton @click="handleLogin">Googleでログイン</ShadButton>
+  <div class="flex h-screen w-full items-center justify-center px-4">
+    <LoginForm />
+  </div>
 </template>
