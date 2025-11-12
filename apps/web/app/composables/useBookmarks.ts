@@ -1,4 +1,4 @@
-import type { Bookmark } from '@/types/Bookmark';
+import type { BookmarkDto } from '#shared/types/dto/bookmark.dto'
 
 export const useBookmarks = () => {
   const bookmarks = useState(
@@ -16,7 +16,7 @@ export const useBookmarks = () => {
             { id: 'b', name: 'tag2', color: 'blue' },
           ],
         },
-      ] as Bookmark[]
+      ] as BookmarkDto[]
   );
 
   async function fetchBookmarks() {

@@ -39,6 +39,6 @@ export default defineNuxtConfig({
     alias: {
       cookie: 'cookie-es', // サーバー（Nitro）側
     },
-  },
+  }
 });
 

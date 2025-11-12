@@ -1,6 +1,7 @@
-export interface Space {
+export interface SpaceDto {
   id: string;
   name: string;
   createdAt: string;
   modifiedAt: string;
 }
+
