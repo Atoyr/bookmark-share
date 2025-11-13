@@ -2,6 +2,10 @@
   import AppSidebar from '@/components/AppSidebar.vue';
   import { useBreadcrumb } from '~/composables/useBreadcrumb';
   const breadcrumb = useBreadcrumb();
+
+  const { fetchProfile } = useUser();
+  await fetchProfile("");
+
 </script>
 
 <template>

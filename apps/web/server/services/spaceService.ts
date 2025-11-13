@@ -1,5 +1,6 @@
 // ヘルパー関数（テスト時にモック可能）
 export async function fetchSpaces() {
+  // FIXME: リポジトリ経由で取得
   await new Promise((resolve) => setTimeout(resolve, 100));
   return [
     {
