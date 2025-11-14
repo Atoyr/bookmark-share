@@ -1,7 +1,8 @@
-export interface SpaceDto {
+export interface Space {
   id: string;
   name: string;
-  owner: string;
+  ownerId: string;
+  image: string | null;
   createdAt: string;
   modifiedAt: string;
 }
