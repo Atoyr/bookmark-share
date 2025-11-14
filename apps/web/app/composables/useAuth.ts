@@ -12,9 +12,16 @@ export function useAuth() {
     });
   }
 
+  async function signup(payload: {name: string, avatar: string | null }) {
+    await $fetch('/api/signup', {
+      method: 'POST',
+      body: payload
+    });
+  }
+
   async function logout() {
     await client.auth.signOut();
   }
 
-  return { loginWithGoogle, logout };
+  return { loginWithGoogle, signup, logout };
 }

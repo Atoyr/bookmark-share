@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const user = useSupabaseUser()
 const redirectInfo = useSupabaseCookieRedirect()
+console.log("confirm page loaded")
 
 watch(user, () => {
   if (user.value) {

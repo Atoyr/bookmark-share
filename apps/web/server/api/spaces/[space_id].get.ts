@@ -1,10 +1,10 @@
 import { defineEventHandler } from 'h3';
-import { fetchSpaces } from '../../services/spaceService';
+import { getSpaces } from '../../usecases/getSpace';
 
 export default defineEventHandler(async (event) => {
   const spaceId = getRouterParam(event, 'space_id');
 
-  const spaces = await fetchSpaces();
+  const spaces = await getSpaces();
 
   if (!spaces || spaces.length === 0) {
     throw createError({
@@ -15,4 +15,3 @@ export default defineEventHandler(async (event) => {
 
   return spaces;
 });
-

@@ -1,11 +1,11 @@
 import { defineEventHandler } from 'h3';
-import { fetchProfile } from '../../services/profileService';
+import { getUser } from '../../usecases/getUser';
 import { requireUser } from '../../auth/core/helpers';
 
 export default defineEventHandler(async (event) => {
   const user = await requireUser(event);
 
-  const profile = await fetchProfile(user.id);
+  const profile = await getUser(user.id);
 
   if (profile === null) {
     throw createError({
@@ -16,4 +16,3 @@ export default defineEventHandler(async (event) => {
 
   return profile;
 });
-

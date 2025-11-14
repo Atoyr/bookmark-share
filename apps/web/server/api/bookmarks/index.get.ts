@@ -1,5 +1,5 @@
 import { defineEventHandler } from 'h3';
-import { fetchBookmarks } from '../../services/bookmarkService';
+import { fetchBookmarks } from '../../usecases/bookmarkService';
 import { requireUser } from '../../auth/core/helpers';
 
 export default defineEventHandler(async (event) => {

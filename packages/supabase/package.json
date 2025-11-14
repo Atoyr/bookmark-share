@@ -19,9 +19,12 @@
     "start": "dotenv -e supabase/.env -- supabase start -x edge-runtime",
     "stop": "dotenv -e supabase/.env -- supabase stop",
     "db:gen:local": "dotenv -e supabase/.env -- supabase gen types typescript --local > src/types.gen.ts",
-    "db:dump:local": "supabase db --dump --data-only -f ./supabase/seed.sql",
+    "db:dump:data:local": "dotenv -e supabase/.env -- supabase db --dump --data-only --local -f ./supabase/seed.sql",
+    "db:mig:new:local": "dotenv -e supabase/.env -- supabase migration new",
+    "db:mig:up:local": "dotenv -e supabase/.env -- supabase migration up",
     "db:pull": "supabase db pull",
     "db:push": "supabase db push",
+    "db:reset": "dotenv -e supabase/.env -- supabase db reset",
     "db:studio": "supabase studio"
   },
   "devDependencies": {
