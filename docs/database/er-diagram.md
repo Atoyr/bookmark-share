@@ -11,14 +11,36 @@ erDiagram
     bookmark_tags }o--||tag_definitions : タグ情報
     spaces ||--|{ tag_definitions : スペースが持つタグ
     bookmarks ||--o{ bookmark_tags : ブックマークに紐付くタグ
+    users ||--|{ spaces : スペースオーナー
+    spaces ||--|{ space_users : スペースに所属するユーザー
 
+    users {
+        uuid id PK
+        uuid uid
+        string name
+        string avater
+        datetime created_at
+        datetime updated_at
+        datetime deleted_at
+    }
 
     spaces {
         uuid id PK
         string name
+        string description
+        string owner_id FK
+        string image
+        bool isPrivate
         datetime created_at
-        datetime modified_at
+        datetime updated_at
         datetime deleted_at
+    }
+
+    space_users {
+        uuid id PK
+        uuid uid FK
+        datetime created_at
+        datetime updated_at
     }
 
     bookmarks {
@@ -27,7 +49,7 @@ erDiagram
         string title
         string url
         datetime created_at
-        datetime modified_at
+        datetime updated_at
         datetime deleted_at
     }
 
@@ -43,7 +65,8 @@ erDiagram
         uuid space_id FK
         string name
         datetime created_at
-        datetime modified_at
+        datetime updated_at
         datetime deleted_at
     }
 ```
+

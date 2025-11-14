@@ -34,9 +34,88 @@ export type Database = {
   }
   public: {
     Tables: {
+      bookmark_tags: {
+        Row: {
+          bookmark_id: string
+          created_at: string
+          deleted_at: string | null
+          id: string
+          tag_definition_id: string
+          updated_at: string
+        }
+        Insert: {
+          bookmark_id: string
+          created_at?: string
+          deleted_at?: string | null
+          id?: string
+          tag_definition_id: string
+          updated_at?: string
+        }
+        Update: {
+          bookmark_id?: string
+          created_at?: string
+          deleted_at?: string | null
+          id?: string
+          tag_definition_id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      bookmarks: {
+        Row: {
+          created_at: string
+          deleted_at: string | null
+          id: number
+          space_id: string
+          title: string
+          updated_at: string
+          url: string
+        }
+        Insert: {
+          created_at?: string
+          deleted_at?: string | null
+          id?: number
+          space_id: string
+          title: string
+          updated_at?: string
+          url: string
+        }
+        Update: {
+          created_at?: string
+          deleted_at?: string | null
+          id?: number
+          space_id?: string
+          title?: string
+          updated_at?: string
+          url?: string
+        }
+        Relationships: []
+      }
+      space_users: {
+        Row: {
+          created_at: string
+          id: number
+          uid: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          uid?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          uid?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       spaces: {
         Row: {
           created_at: string
+          deleted_at: string | null
           description: string
           id: string
           image: string | null
@@ -46,6 +125,7 @@ export type Database = {
         }
         Insert: {
           created_at?: string
+          deleted_at?: string | null
           description?: string
           id?: string
           image?: string | null
@@ -55,11 +135,69 @@ export type Database = {
         }
         Update: {
           created_at?: string
+          deleted_at?: string | null
           description?: string
           id?: string
           image?: string | null
           name?: string
           owner_id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      tag_definitions: {
+        Row: {
+          created_at: string
+          deleted_at: string | null
+          id: number
+          name: string
+          space_id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          deleted_at?: string | null
+          id?: number
+          name: string
+          space_id: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          deleted_at?: string | null
+          id?: number
+          name?: string
+          space_id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      users: {
+        Row: {
+          avater: string | null
+          created_at: string
+          deleted_at: string | null
+          id: string
+          name: string
+          uid: string
+          updated_at: string
+        }
+        Insert: {
+          avater?: string | null
+          created_at?: string
+          deleted_at?: string | null
+          id?: string
+          name: string
+          uid?: string
+          updated_at?: string
+        }
+        Update: {
+          avater?: string | null
+          created_at?: string
+          deleted_at?: string | null
+          id?: string
+          name?: string
+          uid?: string
           updated_at?: string
         }
         Relationships: []

@@ -6,8 +6,8 @@ export default defineNuxtConfig({
   css: ['~/assets/css/tailwind.css'],
   runtimeConfig: {
     public: {
-      SUPABASE_URL: process.env.PUBLIC_SUPABASE_URL,
-      SUPABASE_ANON_KEY: process.env.PUBLIC_SUPABASE_ANON_KEY,
+      SUPABASE_URL: process.env.SUPABASE_URL,
+      SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY,
     },
   },
   supabase: {

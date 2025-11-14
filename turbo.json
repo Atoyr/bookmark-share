@@ -27,6 +27,8 @@
     "transit": {
       "dependsOn": ["^transit"]
     },
-    "db:gen": { "cache": false }
+    "db:gen:local": { "cache": false },
+    "start": { "cache": false },
+    "stop": { "cache": false }
   }
 }

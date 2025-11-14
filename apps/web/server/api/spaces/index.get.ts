@@ -1,5 +1,5 @@
 import { defineEventHandler } from 'h3';
-import { fetchSpaces } from '../../services/spaceService';
+import { getSpaces } from '../../usecases/getSpace';
 
 export default defineEventHandler(async (event) => {
   // FIXME: 認証チェック
@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
   //   });
   // }
 
-  const spaces = await fetchSpaces();
+  const spaces = await getSpaces();
 
   if (!spaces || spaces.length === 0) {
     throw createError({

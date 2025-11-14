@@ -4,6 +4,5 @@ export interface Space {
   ownerId: string;
   image: string | null;
   createdAt: string;
-  modifiedAt: string;
+  updatedAt: string;
 }
-
