@@ -26,6 +26,7 @@
     },
     "transit": {
       "dependsOn": ["^transit"]
-    }
+    },
+    "db:gen": { "cache": false }
   }
 }

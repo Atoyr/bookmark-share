@@ -1,0 +1,32 @@
+{
+  "name": "@repo/supabase",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
+    "./server-client": {
+      "types": "./src/server-client.ts",
+      "default": "./src/server-client.ts",
+      "browser": null
+    }
+  },
+  "scripts": {
+    "start": "dotenv -e supabase/.env -- supabase start -x edge-runtime",
+    "stop": "dotenv -e supabase/.env -- supabase stop",
+    "db:gen:local": "dotenv -e supabase/.env -- supabase gen types typescript --local > src/types.gen.ts",
+    "db:dump:local": "supabase db --dump --data-only -f ./supabase/seed.sql",
+    "db:pull": "supabase db pull",
+    "db:push": "supabase db push",
+    "db:studio": "supabase studio"
+  },
+  "devDependencies": {
+    "@supabase/supabase-js": "latest",
+    "dotenv-cli": "^11.0.0",
+    "supabase": "latest"
+  }
+}
