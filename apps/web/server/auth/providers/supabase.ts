@@ -14,7 +14,7 @@ const supabaseProvider = {
   async getUser(event: H3Event): Promise<User | null> {
     const { user } = await getServerSupabase(event);
     if (!user) return null;
-    return { id: user.id, email: user.email ?? undefined };
+    return { id: user.sub, email: user.email ?? undefined };
   },
   async clearSession(event: H3Event) {
     // 必要なら serverSupabaseClient で signOut するなど（省略可・Cookie削除はSupabase管理）

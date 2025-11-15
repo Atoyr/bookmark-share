@@ -12,14 +12,8 @@ export default defineEventHandler(async (event) => {
   //   });
   // }
 
-  const spaces = await getSpaces();
-
-  if (!spaces || spaces.length === 0) {
-    throw createError({
-      statusCode: 404,
-      statusMessage: 'Spaces not found',
-    });
-  }
-
-  return spaces;
+  throw createError({
+    statusCode: 404,
+    statusMessage: 'Spaces not found',
+  });
 });

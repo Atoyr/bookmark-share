@@ -8,7 +8,7 @@
   const { signup } = useAuth();
 
   const handleSignup = () => {
-    signup('hoge', null);
+    signup({name:'hoge', avater: null});
   };
 </script>
 

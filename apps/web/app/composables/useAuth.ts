@@ -12,10 +12,10 @@ export function useAuth() {
     });
   }
 
-  async function signup(payload: {name: string, avatar: string | null }) {
-    await $fetch('/api/signup', {
+  async function signup(payload: { name: string; avatar: string | null }) {
+    await $fetch('/api/auth/upsert-user', {
       method: 'POST',
-      body: payload
+      body: payload,
     });
   }
 

@@ -2,6 +2,7 @@
   import { useAuth } from '@/composables/useAuth';
   const { loginWithGoogle } = useAuth();
   const handleLogin = () => {
+    console.log("Logging in with Google...");
     loginWithGoogle();
   };
 </script>

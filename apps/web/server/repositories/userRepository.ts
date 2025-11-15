@@ -1,6 +1,4 @@
-import type { UserInsert } from '@repo/supabase';
 import type { ServerSupabaseClient } from '@repo/supabase/server-client';
-import { getServerSupabaseClient } from '@repo/supabase/server-client';
 import type { User } from '../types/user';
 import { z } from 'zod';
 
@@ -12,7 +10,7 @@ export interface UserRepository {
   findByUid(uid: string): Promise<User | null>;
   findById(id: string): Promise<User | null>;
   findByUids(uids: string[]): Promise<User[]>;
-  newUser(uid:string, name:string, avatar: string | null): Promise<User>;
+  newUser(name: string, avatar: string | null): Promise<User>;
 }
 
 /**
@@ -23,19 +21,20 @@ export const userSchema = z
     id: z.uuid(),
     uid: z.uuid(),
     name: z.string(),
-    avatar: z.string().nullable(),
+    avatar: z.string().nullable().optional(),
     created_at: z.string().transform((str) => new Date(str)),
     updated_at: z.string().transform((str) => new Date(str)),
   })
-  .transform((row): User => ({
-    id: row.id,
-    uid: row.uid,
-    name: row.name,
-    avatar: row.avatar,
-    createdAt: row.created_at,
-    updatedAt: row.updated_at,
-  }));
-
+  .transform(
+    (row): User => ({
+      id: row.id,
+      uid: row.uid,
+      name: row.name,
+      avatar: row.avatar,
+      createdAt: row.created_at,
+      updatedAt: row.updated_at,
+    })
+  );
 
 /**
  * Supabase を使った実装
@@ -44,17 +43,19 @@ export const userSchema = z
 export class UserRepository implements UserRepository {
   constructor(private readonly client: ServerSupabaseClient) {}
 
-  static create(): UserRepository {
-    const client = getServerSupabaseClient();
-    return new UserRepository(client);
-  }
-
   async findByUid(uid: string): Promise<User | null> {
-    const { data, error } = await this.client.from('users').select('*').eq('uid', uid).maybeSingle();
+    const { data, error } = await this.client
+      .from('users')
+      .select('*')
+      .eq('uid', uid)
+      .is('deleted_at', null)
+      .maybeSingle();
 
-    if (error && error.code !== 'PGRST116') {
-      throw new Error(`Failed to fetch user: ${error.message}`);
+    if (error) {
+      throw error;
     }
+
+    console.log('findByUid data:', data);
 
     if (!data) {
       return null;
@@ -64,7 +65,12 @@ export class UserRepository implements UserRepository {
   }
 
   async findById(id: string): Promise<User | null> {
-    const { data, error } = await this.client.from('users').select('*').eq('id', id).maybeSingle();
+    const { data, error } = await this.client
+      .from('users')
+      .select('*')
+      .eq('id', id)
+      .not('deleted_at', 'is', null)
+      .maybeSingle();
 
     if (error && error.code !== 'PGRST116') {
       throw new Error(`Failed to fetch user: ${error.message}`);
@@ -78,7 +84,7 @@ export class UserRepository implements UserRepository {
   }
 
   async findByUids(uids: string[]): Promise<User[]> {
-    const { data, error } = await this.client.from('users').select('*').in("uid", uids);
+    const { data, error } = await this.client.from('users').select('*').in('uid', uids).not('deleted_at', 'is', null);
 
     if (error && error.code !== 'PGRST116') {
       throw new Error(`Failed to fetch user: ${error.message}`);
@@ -87,12 +93,11 @@ export class UserRepository implements UserRepository {
     return z.array(userSchema).parse(data);
   }
 
-  async newUser(uid:string, name:string, avatar: string | null = null): Promise<User> {
+  async newUser(name: string, avatar: string | null = null): Promise<User> {
     const { data, error } = await this.client.from('users').insert({
-      uid: uid, 
-      name: name, 
-      avater: avatar
-    })
+      name: name,
+      avater: avatar,
+    });
 
     if (error && error.code !== 'PGRST116') {
       throw new Error(`Failed to create user: ${error.message}`);

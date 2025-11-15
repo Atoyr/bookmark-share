@@ -1,6 +1,5 @@
 import type { SpaceRow } from '@repo/supabase';
 import type { ServerSupabaseClient } from '@repo/supabase/server-client';
-import { getServerSupabaseClient } from '@repo/supabase/server-client';
 import type { Space } from '../types/space';
 
 /**
@@ -18,11 +17,6 @@ export interface SpaceRepository {
  */
 export class SpaceRepository implements SpaceRepository {
   constructor(private readonly client: ServerSupabaseClient) {}
-
-  static create(): SpaceRepository {
-    const client = getServerSupabaseClient();
-    return new SpaceRepository(client);
-  }
 
   async findAll(): Promise<Space[]> {
     const { data, error } = await this.client.from('spaces').select('*').returns<SpaceRow[]>();
