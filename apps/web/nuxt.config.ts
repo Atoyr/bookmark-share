@@ -15,7 +15,7 @@ export default defineNuxtConfig({
     key: process.env.PUBLIC_SUPABASE_ANON_KEY,
     redirectOptions: {
       login: '/login',
-      callback: '/auth/callback',
+      callback: '/confirm',
       exclude: ['/', '/bookmarks'],
     },
   },

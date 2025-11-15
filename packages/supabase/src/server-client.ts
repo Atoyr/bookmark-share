@@ -23,7 +23,10 @@ export function getServerSupabaseClient(): ServerSupabaseClient {
   }
 
   _client = createClient<Database>(url, serviceRoleKey, {
-    auth: { persistSession: false },
+    auth: {
+      persistSession: false,
+      autoRefreshToken: false,
+    },
   });
 
   return _client;
