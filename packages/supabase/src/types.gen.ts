@@ -113,7 +113,22 @@ export type Database = {
           uid?: string | null
           updated_at?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "space_users_space_id_fkey"
+            columns: ["space_id"]
+            isOneToOne: false
+            referencedRelation: "spaces"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "space_users_uid_fkey"
+            columns: ["uid"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       spaces: {
         Row: {
@@ -182,7 +197,6 @@ export type Database = {
           deleted_at: string | null
           id: string
           name: string
-          uid: string
           updated_at: string
         }
         Insert: {
@@ -191,7 +205,6 @@ export type Database = {
           deleted_at?: string | null
           id?: string
           name: string
-          uid?: string
           updated_at?: string
         }
         Update: {
@@ -200,7 +213,6 @@ export type Database = {
           deleted_at?: string | null
           id?: string
           name?: string
-          uid?: string
           updated_at?: string
         }
         Relationships: []
