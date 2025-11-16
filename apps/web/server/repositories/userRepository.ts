@@ -30,7 +30,7 @@ export const userSchema = z
       id: row.id,
       uid: row.uid,
       name: row.name,
-      avatar: row.avatar,
+      avatar: row.avatar ?? null,
       createdAt: row.created_at,
       updatedAt: row.updated_at,
     })
