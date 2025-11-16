@@ -20,6 +20,7 @@
     "stop": "dotenv -e supabase/.env -- supabase stop",
     "db:gen:local": "dotenv -e supabase/.env -- supabase gen types typescript --local > src/types.gen.ts",
     "db:dump:data:local": "dotenv -e supabase/.env -- supabase db --dump --data-only --local -f ./supabase/seed.sql",
+    "db:diff:local": "dotenv -e supabase/.env -- supabase db diff -f",
     "db:mig:new:local": "dotenv -e supabase/.env -- supabase migration new",
     "db:mig:up:local": "dotenv -e supabase/.env -- supabase migration up",
     "db:pull": "supabase db pull",
