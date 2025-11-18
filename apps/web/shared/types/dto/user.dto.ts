@@ -1,8 +1,7 @@
 export interface UserDto {
   id: string;
-  uid: string;
   name: string;
-  avatar: string;
+  avatar: string | null;
   updatedAt: Date;
 }
 
