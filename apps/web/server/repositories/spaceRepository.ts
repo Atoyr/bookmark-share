@@ -1,6 +1,6 @@
-import type { SpaceRow } from '@repo/supabase';
 import type { ServerSupabaseClient } from '@repo/supabase/server-client';
 import type { Space } from '../types/space';
+import { spaceRowTransformSpace, spaceRowWithDatetimeTransformSpace } from '../schemas/space';
 
 /**
  * Repository が満たすべきインターフェース
@@ -9,6 +9,7 @@ import type { Space } from '../types/space';
 export interface SpaceRepository {
   findByUserId(userId: string): Promise<Space[]>;
   findById(id: string): Promise<Space | null>;
+  newSpaceWithOwner(name: string): Promise<Space>;
 }
 
 /**
@@ -19,44 +20,74 @@ export class SpaceRepository implements SpaceRepository {
   constructor(private readonly client: ServerSupabaseClient) {}
 
   async findAll(): Promise<Space[]> {
-    const { data, error } = await this.client.from('spaces').select('*').returns<SpaceRow[]>();
+    const { data, error } = await this.client.from('spaces').select('*');
 
     if (error) {
-      throw new Error(`Failed to fetch spaces: ${error.message}`);
+      throw error;
     }
 
     if (!data) {
       return [];
     }
 
-    return data.map((row) => ({
-      id: row.id,
-      name: row.name,
-      ownerId: row.owner_id,
-      image: row.image,
-      createdAt: row.created_at,
-      updatedAt: row.updated_at,
-    }));
+    return spaceRowTransformSpace.array().parse(data);
   }
 
   async findById(id: string): Promise<Space | null> {
-    const { data, error } = await this.client.from('spaces').select('*').eq('id', id).maybeSingle();
+    const { data, error } = await this.client
+      .from('spaces')
+      .select(
+        `
+        id, 
+        name, 
+        description,
+        owner_id,
+        image, 
+        space_users (
+          id, 
+          space_id,
+          uid, 
+          users (
+            id, 
+            name, 
+            avatar, 
+          )
+        )
+        `
+      )
+      .eq('id', id)
+      .maybeSingle();
 
-    if (error && error.code !== 'PGRST116') {
-      throw new Error(`Failed to fetch space: ${error.message}`);
+    if (error) {
+      throw error;
     }
 
     if (!data) {
       return null;
     }
 
-    return {
-      id: data.id,
-      name: data.name,
-      ownerId: data.owner_id,
-      image: data.image,
-      createdAt: data.created_at,
-      updatedAt: data.updated_at,
+    return spaceRowWithDatetimeTransformSpace.parse(data);
+  }
+
+  async newSpaceWithOwner(name: string): Promise<Space> {
+    const { data, error } = await this.client.from('spaces').insert({
+      name: name,
+    }).select('*').single();
+
+    if (error) {
+      throw error;
     }
+
+    const space = spaceRowTransformSpace.parse(data);
+
+    const { error: spaceError } = await this.client.from('space_users').insert({
+      space_id: space.id,
+    }).select().single();
+
+    if (spaceError) {
+      throw spaceError;
+    }
+
+    return (await this.findById(space.id)) as Space;
   }
 }

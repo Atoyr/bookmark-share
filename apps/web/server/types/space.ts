@@ -1,8 +1,10 @@
+import type { User } from './user';
 export interface Space {
   id: string;
   name: string;
   ownerId: string;
   image: string | null;
-  createdAt: string;
-  updatedAt: string;
+  members: User[];
+  createdAt?: Date;
+  updatedAt?: Date;
 }
