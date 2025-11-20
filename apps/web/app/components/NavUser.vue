@@ -2,7 +2,7 @@
   import { Check, ChevronsUpDown, GalleryVerticalEnd } from 'lucide-vue-next';
 
   const props = defineProps<{
-    user: User
+    user?: User
   }>();
 </script>
 
@@ -16,9 +16,9 @@
             class="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
           >
             <!-- TODO: アバター -->
-            <Avatar :src="props.user.avater" :fallback="props.user.name[0]" />
+            <Avatar :src="props.user?.avater" :fallback="props.user?.name[0] ?? ''" />
             <div class="flex flex-col gap-0.5 leading-none">
-              <span class="font-semibold">{{props.user.name}}</span>
+              <span class="font-semibold">{{props.user?.name ?? ''}}</span>
             </div>
             <ChevronsUpDown class="ml-auto" />
           </ShadSidebarMenuButton>

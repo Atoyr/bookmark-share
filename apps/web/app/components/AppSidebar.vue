@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
   const props = defineProps<{
-    user: User, 
+    user?: User, 
     spaces: Space[], 
   }>();
 </script>
