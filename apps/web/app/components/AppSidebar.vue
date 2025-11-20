@@ -1,9 +1,15 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+
+  const props = defineProps<{
+    user: User, 
+    spaces: Space[], 
+  }>();
+</script>
 
 <template>
   <ShadSidebar>
     <ShadSidebarHeader>
-      <NavUser />
+      <NavUser :user="props.user"/>
     </ShadSidebarHeader>
     <ShadSidebarContent>
       <ShadSidebarGroup />

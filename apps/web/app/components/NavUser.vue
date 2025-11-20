@@ -1,8 +1,9 @@
 <script setup lang="ts">
   import { Check, ChevronsUpDown, GalleryVerticalEnd } from 'lucide-vue-next';
-  import { useUser } from '@/composables/useUser';
 
-  const { user } = useUser();
+  const props = defineProps<{
+    user: User
+  }>();
 </script>
 
 <template>
@@ -15,9 +16,9 @@
             class="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
           >
             <!-- TODO: アバター -->
-            <Avatar fallback="CN" />
+            <Avatar :src="props.user.avater" :fallback="props.user.name[0]" />
             <div class="flex flex-col gap-0.5 leading-none">
-              <span class="font-semibold">{{user.name}}</span>
+              <span class="font-semibold">{{props.user.name}}</span>
             </div>
             <ChevronsUpDown class="ml-auto" />
           </ShadSidebarMenuButton>
