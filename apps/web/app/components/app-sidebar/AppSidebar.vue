@@ -18,7 +18,7 @@
         <ShadSidebarMenu>
           <ShadSidebarMenuItem>
             <ShadSidebarMenuButton as-child>
-              <NuxtLink to="/dashboard">
+              <NuxtLink to="/home">
                 <component :is="Home" />
                 <span>HOME</span>
               </NuxtLink>
