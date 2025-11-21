@@ -18,9 +18,9 @@
             :key="space.id"
           >
             <ShadSidebarMenuItemButton as-child>
-            <a :href='space.url'>
+            <NuxtLink :to='space.url'>
               <span>{{ space.name }}</span>
-            </a>
+            </NuxtLink>
             </ShadSidebarMenuItemButton>
           </ShadSidebarMenuItem>
         </ShadSidebarMenu>
