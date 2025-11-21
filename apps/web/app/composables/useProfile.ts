@@ -3,7 +3,6 @@ import type { User } from '~/types/user';
 import fetchIsPending from '~/utils/fetchIsPending';
 
 export const useProfile = () => {
-
   const {data, status, error, refresh } = useFetch<UserDto>('/api/profile/me');
   const me = computed<User | null >(() => {
     return data.value ? { name: data.value.name, avatar: data.value.avatar ?? '' } as User : null;

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import AppSidebar from '@/components/AppSidebar.vue';
+  import { AppSidebar } from '@/components/app-sidebar';
   import { useBreadcrumb } from '~/composables/useBreadcrumb';
 
   import { useProfile } from '~/composables/useProfile';

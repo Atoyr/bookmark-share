@@ -1,4 +1,7 @@
 <script setup lang="ts">
+  import { Home } from 'lucide-vue-next';
+  import NavUser from './NavUser.vue';
+  import NavPrivateSpace from './NavPrivateSpace.vue';
   const props = defineProps<{
     user?: User;
     spaces: Space[];
@@ -13,18 +16,18 @@
     <ShadSidebarContent>
       <ShadSidebarGroup>
         <ShadSidebarMenu>
-          <ShadSidebarMenuItem
-            v-for="space in spaces"
-            :key="space.id"
-          >
-            <ShadSidebarMenuItemButton as-child>
-            <NuxtLink :to='space.url'>
-              <span>{{ space.name }}</span>
-            </NuxtLink>
-            </ShadSidebarMenuItemButton>
+          <ShadSidebarMenuItem>
+            <ShadSidebarMenuButton as-child>
+              <NuxtLink to="/dashboard">
+                <component :is="Home" />
+                <span>HOME</span>
+              </NuxtLink>
+            </ShadSidebarMenuButton>
           </ShadSidebarMenuItem>
         </ShadSidebarMenu>
       </ShadSidebarGroup>
+      <!-- Private -->
+      <NavPrivateSpace :spaces="props.spaces" />
     </ShadSidebarContent>
     <ShadSidebarFooter />
   </ShadSidebar>

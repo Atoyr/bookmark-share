@@ -3,7 +3,6 @@ import type { Space } from '~/types/space';
 
 export const useSpaces = () => {
   const { data, status, error, refresh } = useFetch<GetSpacesDto>('/api/spaces', {
-    key: 'profile-me',
     watch: false,
   });
   const spaces = computed<Space[]>(() => {
