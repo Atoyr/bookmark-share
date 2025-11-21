@@ -1,8 +1,0 @@
-export interface SpaceDto {
-  id: string;
-  name: string;
-  owner: string;
-  createdAt: string;
-  modifiedAt: string;
-}
-

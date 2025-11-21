@@ -3,11 +3,11 @@
   import { useBreadcrumb } from '~/composables/useBreadcrumb';
 
   import { useProfile } from '~/composables/useProfile';
+  import { useSpaces } from '~/composables/useSpaces';
   const breadcrumb = useBreadcrumb();
 
   const { me } = useProfile();
-
-  const spaces = [];
+  const { spaces } = useSpaces();
 
 </script>
 

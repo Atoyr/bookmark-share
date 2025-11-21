@@ -1,19 +1,30 @@
 import { defineEventHandler } from 'h3';
-import { getSpaces } from '../../usecases/getSpace';
+import { requireUser } from '../../auth/core/helpers';
+import { SpaceRepository } from '../../repositories/spaceRepository';
+import { GetSpacesDto } from '#shared/types/dto/spaces.dto';
 
-export default defineEventHandler(async (event) => {
-  // FIXME: 認証チェック
-  // const userId = event.context.auth?.userId;
-  //
-  // if (!userId) {
-  //   throw createError({
-  //     statusCode: 401,
-  //     statusMessage: 'Unauthorized'
-  //   });
-  // }
+export default defineEventHandler(async (event): Promise<GetSpacesDto> => {
+  await requireUser(event);
 
-  throw createError({
-    statusCode: 404,
-    statusMessage: 'Spaces not found',
+  const client = await getSupabaseServerClient(event);
+  const spaceRepository = new SpaceRepository(client);
+
+  const spaces = await spaceRepository.findAll().catch((err) => {
+    console.error('スペース一覧取得エラー:', err);
+
+    throw createError({
+      statusCode: 500,
+      statusMessage: 'スペース一覧の取得に失敗しました',
+    });
   });
+
+  return {
+    count: spaces.length,
+    spaces: spaces.map((space) => ({
+      id: space.id,
+      name: space.name,
+      owner: space.ownerId,
+      image: space.image,
+    })),
+  };
 });

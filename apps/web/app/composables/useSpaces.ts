@@ -1,17 +1,39 @@
-import type { SpaceDto } from '#shared/types/dto/space.dto';
+import type { GetSpacesDto } from '#shared/types/dto/spaces.dto';
+import type { Space } from '~/types/space';
 
 export const useSpaces = () => {
-  const spaces = useState('spaces', () => [] as SpaceDto[]);
+  const { data, status, error, refresh } = useFetch<GetSpacesDto>('/api/spaces', {
+    key: 'profile-me',
+    watch: false,
+  });
+  const spaces = computed<Space[]>(() => {
+    if (data.value == null) {
+      return [];
+    }
 
-  async function fetchSpaces() {
-    const data = await $fetch('/api/spaces');
+    return data.value.spaces.map((space) => ({
+      id: space.id,
+      name: space.name,
+      owner: space.owner,
+      image: space.image,
+      url: `/spaces/${space.id}`,
+    }));
+  });
 
-    spaces.value = data as SpaceDto[];
-    return spaces;
-  }
+  const pending = computed<Boolean>(() => fetchIsPending(status.value));
+  const count = computed<number>(() => {
+    if (data.value == null) {
+      return 0;
+    }
+    return data.value.count;
+  });
 
   return {
     spaces: readonly(spaces),
-    fetchSpaces,
+    count: readonly(count),
+    pending: readonly(pending),
+    error: readonly(error),
+
+    refresh,
   };
 };
