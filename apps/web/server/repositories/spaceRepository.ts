@@ -43,6 +43,8 @@ export class SpaceRepository implements SpaceRepository {
         description,
         owner_id,
         image, 
+        created_at, 
+        updated_at, 
         space_users (
           id, 
           space_id,
@@ -50,7 +52,7 @@ export class SpaceRepository implements SpaceRepository {
           users (
             id, 
             name, 
-            avatar, 
+            avatar
           )
         )
         `

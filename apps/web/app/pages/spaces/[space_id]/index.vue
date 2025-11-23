@@ -1,8 +1,14 @@
 <script setup lang="ts">
   import { useBreadcrumb } from '~/composables/useBreadcrumb';
+  import { useSpace } from '~/composables/useSpace';
+  const route = useRoute();
 
   const breadcrumb = useBreadcrumb();
-  breadcrumb.value = [{ label: 'Space List', href: '/spaces' }, { label: 'space name' }];
+  const id = route.params.space_id as string;
+  const { space } = useSpace(id);
+  watchEffect(() => {
+    breadcrumb.value = [{ label: 'Space List', href: '/spaces' }, { label: space.value?.name ?? '' }];
+  });
 </script>
 
 <template>
