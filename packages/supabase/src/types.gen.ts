@@ -65,7 +65,7 @@ export type Database = {
         Row: {
           created_at: string
           deleted_at: string | null
-          id: number
+          id: string
           space_id: string
           title: string
           updated_at: string
@@ -74,7 +74,7 @@ export type Database = {
         Insert: {
           created_at?: string
           deleted_at?: string | null
-          id?: number
+          id?: string
           space_id: string
           title: string
           updated_at?: string
@@ -83,7 +83,7 @@ export type Database = {
         Update: {
           created_at?: string
           deleted_at?: string | null
-          id?: number
+          id?: string
           space_id?: string
           title?: string
           updated_at?: string
@@ -94,21 +94,21 @@ export type Database = {
       space_users: {
         Row: {
           created_at: string
-          id: number
+          id: string
           space_id: string
           uid: string | null
           updated_at: string
         }
         Insert: {
           created_at?: string
-          id?: number
+          id?: string
           space_id: string
           uid?: string | null
           updated_at?: string
         }
         Update: {
           created_at?: string
-          id?: number
+          id?: string
           space_id?: string
           uid?: string | null
           updated_at?: string
@@ -167,7 +167,7 @@ export type Database = {
         Row: {
           created_at: string
           deleted_at: string | null
-          id: number
+          id: string
           name: string
           space_id: string
           updated_at: string
@@ -175,7 +175,7 @@ export type Database = {
         Insert: {
           created_at?: string
           deleted_at?: string | null
-          id?: number
+          id?: string
           name: string
           space_id: string
           updated_at?: string
@@ -183,7 +183,7 @@ export type Database = {
         Update: {
           created_at?: string
           deleted_at?: string | null
-          id?: number
+          id?: string
           name?: string
           space_id?: string
           updated_at?: string
@@ -192,7 +192,7 @@ export type Database = {
       }
       users: {
         Row: {
-          avater: string | null
+          avatar: string | null
           created_at: string
           deleted_at: string | null
           id: string
@@ -200,7 +200,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
-          avater?: string | null
+          avatar?: string | null
           created_at?: string
           deleted_at?: string | null
           id?: string
@@ -208,7 +208,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
-          avater?: string | null
+          avatar?: string | null
           created_at?: string
           deleted_at?: string | null
           id?: string
