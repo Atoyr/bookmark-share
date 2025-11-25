@@ -1,33 +1,54 @@
-import type { BookmarkDto } from '#shared/types/dto/bookmark.dto'
+import type { GetBookmarksDto } from '#shared/types/dto/bookmark.dto';
+import type { Bookmark } from '~/types/bookmark';
 
-export const useBookmarks = () => {
-  const bookmarks = useState(
-    'bookmarks',
-    () =>
-      [
-        { id: '1', title: 'googole', url: 'https://www.google.com', tags: [{ id: 'a', name: 'tag1', color: 'red' }] },
-        { id: '2', title: 'yahoo', url: 'https://www.yahoo.com', tags: [{ id: 'b', name: 'tag2', color: 'blue' }] },
-        {
-          id: '3',
-          title: 'msn',
-          url: 'https://www.msn.com',
-          tags: [
-            { id: 'a', name: 'tag1', color: 'red' },
-            { id: 'b', name: 'tag2', color: 'blue' },
-          ],
-        },
-      ] as BookmarkDto[]
-  );
+export interface UseBookmarksOptions {
+  spaceId?: Ref<string>;
+  page?: Ref<number>;
+  pageSize?: Ref<number>;
+}
 
-  async function fetchBookmarks() {
-    const data = await $fetch('/api/bookmarks');
-
-    return bookmarks;
+export const useBookmarks = (options: UseBookmarksOptions) => {
+  const { page, pageSize, spaceId } = options;
+  if ((page !== undefined) !== (pageSize !== undefined)) {
+    throw new Error('Both page and pageSize must be provided together.');
   }
+  const { data, status, error, refresh } = useFetch<GetBookmarksDto>('/api/bookmarks', {
+    watch: false,
+    query: {
+      space_id: spaceId?.value ?? undefined,
+      page: page?.value ?? undefined,
+      pageSize: pageSize?.value ?? undefined,
+    },
+  });
+
+  const bookmarks = computed(() => {
+    if (data?.value == null) {
+      return [];
+    }
+
+    return data.value.bookmarks.map((bookmark) => ({
+      id: bookmark.id,
+      title: bookmark.title,
+      url: bookmark.url,
+      tags: [],
+    })) as Bookmark[];
+  });
+
+  const pending = computed<Boolean>(() => fetchIsPending(status.value));
+  const total = computed<number>(() => {
+    if (data?.value == null) {
+      return 0;
+    }
+    return data.value.total;
+  });
 
   console.log('useBookmarks called');
   return {
-    fetchBookmarks,
     bookmarks: readonly(bookmarks),
+    total: readonly(total),
+    pending: readonly(pending),
+    error: readonly(error),
+
+    refresh,
   };
 };

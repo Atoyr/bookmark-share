@@ -6,13 +6,13 @@
 
   const breadcrumb = useBreadcrumb();
   breadcrumb.value = [{ label: 'Bookmarks' }];
-  const { bookmarks, fetchBookmarks } = useBookmarks();
+  const { bookmarks, total } = useBookmarks();
   console.log('book', bookmarks);
-  await fetchBookmarks();
 </script>
 
 <template>
   <div class="px-2">
+    <p>total {{ total }}</p>
     <div class="container mx-auto py-10">
       <DataTable
         :columns="columns"

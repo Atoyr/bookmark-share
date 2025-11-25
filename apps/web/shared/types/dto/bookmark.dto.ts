@@ -6,3 +6,10 @@ export interface BookmarkDto {
   url: string;
   tags: TagDto[];
 }
+
+export interface GetBookmarksDto {
+  bookmarks: BookmarkDto[];
+  total: number;
+  page: number;
+  pageSize: number;
+}

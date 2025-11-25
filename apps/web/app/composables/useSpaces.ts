@@ -6,7 +6,7 @@ export const useSpaces = () => {
     watch: false,
   });
   const spaces = computed<Space[]>(() => {
-    if (data.value == null) {
+    if (data?.value == null) {
       return [];
     }
 
@@ -21,7 +21,7 @@ export const useSpaces = () => {
 
   const pending = computed<Boolean>(() => fetchIsPending(status.value));
   const count = computed<number>(() => {
-    if (data.value == null) {
+    if (data?.value == null) {
       return 0;
     }
     return data.value.count;

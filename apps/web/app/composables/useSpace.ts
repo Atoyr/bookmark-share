@@ -29,12 +29,12 @@ export function useSpace(spaceId: string) {
 
   const pending = computed<Boolean>(() => fetchIsPending(status.value));
 
-  return { 
-    id: readonly(id), 
-    space: readonly(space), 
-    pending: readonly(pending), 
-    error: readonly(error), 
+  return {
+    id: readonly(id),
+    space: readonly(space),
+    pending: readonly(pending),
+    error: readonly(error),
 
-    refresh 
+    refresh,
   };
 }

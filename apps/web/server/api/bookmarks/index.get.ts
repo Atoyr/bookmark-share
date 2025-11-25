@@ -1,19 +1,61 @@
 import { defineEventHandler } from 'h3';
-import { fetchBookmarks } from '../../usecases/bookmarkService';
 import { requireUser } from '../../auth/core/helpers';
+import { BookmarkRepository } from '../../repositories/bookmarkRepository';
+import { getRange } from '../../utils/getRange';
+import type { Bookmark } from '../../types/bookmark';
+import type { GetBookmarksDto } from '#shared/types/dto/bookmark.dto';
 
-export default defineEventHandler(async (event) => {
+export default defineEventHandler(async (event): Promise<GetBookmarksDto> => {
   const user = await requireUser(event);
+  const query = getQuery(event);
   console.log('Authenticated user:', user);
 
-  const bookmnarks = await fetchBookmarks();
+  const spaceId = query.space_id as string | undefined;
+  const page = query.page ? parseInt(query.page as string, 10) : undefined;
+  const pageSize = query.pageSize ? parseInt(query.page as string, 10) : undefined;
 
-  if (!bookmnarks || bookmnarks.length === 0) {
-    throw createError({
-      statusCode: 404,
-      statusMessage: 'Bookmnarks not found',
+  const range = page && pageSize ? getRange(page, pageSize) : undefined;
+
+  const client = await getSupabaseServerClient(event);
+  const bookmarkRepository = new BookmarkRepository(client);
+
+  const bookmarks = [] as Bookmark[];
+  let total = 0;
+
+  if (spaceId) {
+    const { bookmarks: bs, total: t } = await bookmarkRepository.findBySpaceId(spaceId!, range).catch((err) => {
+      console.error('ブックマーク 取得エラー:', err, 'space_id', spaceId);
+
+      throw createError({
+        statusCode: 500,
+        statusMessage: 'ブックマークの取得に失敗しました',
+        data: { spaceId },
+      });
     });
+    bookmarks.push(...bs);
+    total = t;
+  } else {
+    const { bookmarks: bs, total: t } = await bookmarkRepository.findAll(range).catch((err) => {
+      console.error('ブックマーク 取得エラー:', err);
+
+      throw createError({
+        statusCode: 500,
+        statusMessage: 'ブックマークの取得に失敗しました',
+      });
+    });
+    bookmarks.push(...bs);
+    total = t;
   }
 
-  return bookmnarks;
+  return {
+    bookmarks: bookmarks.map((b) => ({
+      id: b.id,
+      title: b.title,
+      url: b.url,
+      tags: b.tags,
+    })),
+    total: total,
+    page: page ?? 0,
+    pageSize: pageSize ?? 0,
+  };
 });
