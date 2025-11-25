@@ -13,8 +13,8 @@ export interface BookmarkCollection {
  * ここに “契約” を書く
  */
 export interface BookmarkRepository {
-  findAll(range?: Range): Promise<Bookmark[]>;
-  findBySpaceId(spaceId: string, range?: Range): Promise<Bookmark[]>;
+  findAll(range?: Range): Promise<BookmarkCollection>;
+  findBySpaceId(spaceId: string, range?: Range): Promise<BookmarkCollection>;
   findById(id: string): Promise<Bookmark | null>;
 }
 
