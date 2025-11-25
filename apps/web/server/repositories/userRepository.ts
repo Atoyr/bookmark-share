@@ -1,7 +1,7 @@
 import type { ServerSupabaseClient } from '@repo/supabase/server-client';
 import type { User } from '../types/user';
 import { z } from 'zod';
-import { userRowWithDatetimeTransformUser} from '../schemas/user';
+import { userRowWithDatetimeTransformUser } from '../schemas/user';
 
 /**
  * Repository が満たすべきインターフェース
@@ -55,7 +55,7 @@ export class UserRepository implements UserRepository {
       .from('users')
       .insert({
         name: name,
-        avater: avatar,
+        avatar: avatar,
       })
       .select('*')
       .single();
