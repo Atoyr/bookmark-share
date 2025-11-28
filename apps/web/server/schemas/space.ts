@@ -8,10 +8,10 @@ import { createdAndUpdatedSchema } from './datetime';
  * spaces テーブルの行のzodスキーマ定義
  */
 export const spaceRowSchema = z.object({
-  id: z.uuid(),
+  id: z.string().uuid(),
   name: z.string(),
   image: z.string().nullable().optional(),
-  owner_id: z.uuid(),
+  owner_id: z.string().uuid(),
 });
 
 /**
@@ -24,9 +24,9 @@ export const spaceRowWithDatetimeSchema = spaceRowSchema.merge(createdAndUpdated
  * space_users テーブルの行のzodスキーマ定義
  */
 export const spaceUserRowSchema = z.object({
-  id: z.uuid(),
-  uid: z.uuid(),
-  space_id: z.uuid(),
+  id: z.string().uuid(),
+  uid: z.string().uuid(),
+  space_id: z.string().uuid(),
 });
 
 /**
@@ -51,9 +51,9 @@ export const spaceJoinSpaceUsersJoinUserRowSchema = spaceRowSchema.extend({
  * space_users テーブルとusersテーブルを結合したzodスキーマ
  */
 export const spaceUserJoinUserRowSchema = z.object({
-  id: z.uuid(),
-  uid: z.uuid(),
-  space_id: z.uuid(),
+  id: z.string().uuid(),
+  uid: z.string().uuid(),
+  space_id: z.string().uuid(),
   user: userRowSchema,
 });
 
@@ -61,9 +61,9 @@ export const spaceUserJoinUserRowSchema = z.object({
  * space_users テーブルとspacesテーブルを結合したzodスキーマ
  */
 export const spaceUserJoinSpaceRowSchema = z.object({
-  id: z.uuid(),
-  uid: z.uuid(),
-  space_id: z.uuid(),
+  id: z.string().uuid(),
+  uid: z.string().uuid(),
+  space_id: z.string().uuid(),
   spaces: z.array(spaceRowSchema),
 });
 

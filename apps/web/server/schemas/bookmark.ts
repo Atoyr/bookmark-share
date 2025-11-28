@@ -3,7 +3,7 @@ import type { Bookmark } from '../types/bookmark';
 import { createdAndUpdatedSchema } from './datetime';
 
 export const bookmarkRowSchema = z.object({
-  id: z.uuid(),
+  id: z.string().uuid(),
   title: z.string(),
   description: z.string().nullable().optional(),
   url: z.string(),

@@ -1,4 +1,4 @@
-import type { GetBookmarksDto } from '#shared/types/dto/bookmark.dto';
+import type { GetBookmarksResponseDto } from '#shared/types/dto/bookmark.dto';
 import type { Bookmark } from '~/types/bookmark';
 
 export interface UseBookmarksOptions {
@@ -12,7 +12,7 @@ export const useBookmarks = (options: UseBookmarksOptions) => {
   if ((page !== undefined) !== (pageSize !== undefined)) {
     throw new Error('Both page and pageSize must be provided together.');
   }
-  const { data, status, error, refresh } = useFetch<GetBookmarksDto>('/api/bookmarks', {
+  const { data, status, error, refresh } = useFetch<GetBookmarksResponseDto>('/api/bookmarks', {
     watch: false,
     query: {
       space_id: spaceId?.value ?? undefined,
@@ -42,7 +42,6 @@ export const useBookmarks = (options: UseBookmarksOptions) => {
     return data.value.total;
   });
 
-  console.log('useBookmarks called');
   return {
     bookmarks: readonly(bookmarks),
     total: readonly(total),

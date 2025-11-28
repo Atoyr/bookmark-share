@@ -3,7 +3,7 @@ import type { User } from '../types/user';
 import { createdAndUpdatedSchema } from './datetime';
 
 export const userRowSchema = z.object({
-  id: z.uuid(),
+  id: z.string().uuid(),
   name: z.string(),
   avatar: z.string().nullable().optional(),
 });

@@ -8,6 +8,13 @@ export interface BookmarkCollection {
   total: number;
 }
 
+export interface NewBookmarkArgs {
+  title: string;
+  url: string;
+  spaceId: string;
+  tags: string[];
+}
+
 /**
  * Repository が満たすべきインターフェース
  * ここに “契約” を書く
@@ -16,6 +23,7 @@ export interface BookmarkRepository {
   findAll(range?: Range): Promise<BookmarkCollection>;
   findBySpaceId(spaceId: string, range?: Range): Promise<BookmarkCollection>;
   findById(id: string): Promise<Bookmark | null>;
+  newBookmark(props: NewBookmarkArgs): Promise<Bookmark>;
 }
 
 /**
@@ -70,6 +78,24 @@ export class BookmarkRepository implements BookmarkRepository {
 
     if (!data) {
       return null;
+    }
+
+    return bookmarkRowTransformBookmark.parse(data);
+  }
+
+  async newBookmark(props: NewBookmarkArgs): Promise<Bookmark> {
+    const { data, error } = await this.client
+      .from('bookmarks')
+      .insert({
+        title: props.title,
+        url: props.url,
+        space_id: props.spaceId,
+      })
+      .select('*')
+      .single();
+
+    if (error) {
+      throw error;
     }
 
     return bookmarkRowTransformBookmark.parse(data);

@@ -1,15 +1,12 @@
-import type { TagDto } from './tag.dto';
+import { z } from 'zod';
+import {
+  getBookmarksResponseSchema,
+  postBookmarkRequestSchema,
+  postBookmarkResponseSchema,
+} from '../schema/bookmark.schema';
 
-export interface BookmarkDto {
-  id: string;
-  title: string;
-  url: string;
-  tags: TagDto[];
-}
+export type GetBookmarksResponseDto = z.infer<typeof getBookmarksResponseSchema>;
 
-export interface GetBookmarksDto {
-  bookmarks: BookmarkDto[];
-  total: number;
-  page: number;
-  pageSize: number;
-}
+export type PostBookmarkRequestDto = z.infer<typeof postBookmarkRequestSchema>;
+
+export type PostBookmarkResponseDto = z.infer<typeof postBookmarkResponseSchema>;
