@@ -30,7 +30,7 @@
     "db:studio": "supabase studio"
   },
   "devDependencies": {
-    "@supabase/supabase-js": "latest",
+    "@supabase/supabase-js": "2.81.0",
     "dotenv-cli": "^11.0.0",
     "supabase": "latest"
   }

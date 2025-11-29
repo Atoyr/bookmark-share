@@ -3,9 +3,9 @@ import { requireUser } from '../../auth/core/helpers';
 import { BookmarkRepository } from '../../repositories/bookmarkRepository';
 import { getRange } from '../../utils/getRange';
 import type { Bookmark } from '../../types/bookmark';
-import type { GetBookmarksDto } from '#shared/types/dto/bookmark.dto';
+import type { GetBookmarksResponseDto } from '#shared/types/dto/bookmark.dto';
 
-export default defineEventHandler(async (event): Promise<GetBookmarksDto> => {
+export default defineEventHandler(async (event): Promise<GetBookmarksResponseDto> => {
   const user = await requireUser(event);
   const query = getQuery(event);
   console.log('Authenticated user:', user);

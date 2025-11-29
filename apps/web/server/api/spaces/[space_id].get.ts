@@ -1,9 +1,10 @@
 import { defineEventHandler } from 'h3';
 import { requireUser } from '../../auth/core/helpers';
 import { SpaceRepository } from '../../repositories/spaceRepository';
-import { getSpaces } from '../../usecases/getSpace';
+import type { GetSpaceResponseDto } from '#shared/types/dto/space.dto';
 
-export default defineEventHandler(async (event): Promise<GetSpaceDto> => {
+
+export default defineEventHandler(async (event): Promise<GetSpaceResponseDto> => {
   await requireUser(event);
 const id = getRouterParam(event, 'space_id') as string
 
@@ -37,8 +38,9 @@ const id = getRouterParam(event, 'space_id') as string
         id: member.id,
         name: member.name,
         avatar: member.avatar,
-        updatedAt: member.updatedAt,
-      }))
+      })), 
+      createdAt: space.createdAt!,
+      updatedAt: space.updatedAt!,
     }
   }
 });

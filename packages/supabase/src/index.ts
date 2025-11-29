@@ -10,3 +10,18 @@ export type SpaceUpdate = Database["public"]["Tables"]["spaces"]["Update"];
 export type UserRow = Database["public"]["Tables"]["users"]["Row"];
 export type UserInsert = Database["public"]["Tables"]["users"]["Insert"];
 export type UserUpdate = Database["public"]["Tables"]["users"]["Update"];
+
+// bookmarks
+export type BookmarkRow = Database["public"]["Tables"]["bookmarks"]["Row"];
+export type BookmarkInsert =
+  Database["public"]["Tables"]["bookmarks"]["Insert"];
+export type BookmarkUpdate =
+  Database["public"]["Tables"]["bookmarks"]["Update"];
+
+// bookmark_tags
+export type BookmarkTagRow =
+  Database["public"]["Tables"]["bookmark_tags"]["Row"];
+export type BookmarkTagInsert =
+  Database["public"]["Tables"]["bookmark_tags"]["Insert"];
+export type BookmarkTagUpdate =
+  Database["public"]["Tables"]["bookmark_tags"]["Update"];

@@ -1,9 +1,9 @@
 import { defineEventHandler } from 'h3';
 import { requireUser } from '../../auth/core/helpers';
 import { SpaceRepository } from '../../repositories/spaceRepository';
-import { GetSpacesDto } from '#shared/types/dto/spaces.dto';
+import { GetSpacesResponseDto } from '~~/shared/types/dto/space.dto';
 
-export default defineEventHandler(async (event): Promise<GetSpacesDto> => {
+export default defineEventHandler(async (event): Promise<GetSpacesResponseDto> => {
   await requireUser(event);
 
   const client = await getSupabaseServerClient(event);

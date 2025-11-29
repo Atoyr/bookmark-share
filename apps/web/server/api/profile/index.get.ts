@@ -1,9 +1,7 @@
 import { defineEventHandler } from 'h3';
-import { getUser } from '../../usecases/getUser';
 import { requireUser } from '../../auth/core/helpers';
 
 export default defineEventHandler(async (event) => {
-  const user = await requireUser(event);
   return { name: "hoge", avatar_url: "https://example.com/avatar.png" };
 
   // const profile = await getUser(user.id);

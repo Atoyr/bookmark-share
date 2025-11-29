@@ -8,8 +8,8 @@ export interface SpaceDto {
   name: string;
   owner: string;
   image: string | null;
-  createdAt: string;
-  updatedAt: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 /**
@@ -29,16 +29,17 @@ export interface SpaceDetailDto {
   id: string;
   name: string;
   owner: string;
+  image: string | null;
   users: UserDto[];
-  createdAt: string;
-  updatedAt: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 /**
  * Get Space Data Transfer Object
  * GET `/api/spaces/:id`
  */
-export interface GetSpaceDto {
+export interface GetSpaceResponseDto {
   space: SpaceDetailDto;
 }
 
@@ -46,7 +47,7 @@ export interface GetSpaceDto {
  * Get Spaces Data Transfer Object
  * GET `/api/spaces`
  */
-export interface GetSpacesDto {
+export interface GetSpacesResponseDto {
   count: number;
   spaces: SpacesItemDto[];
 }

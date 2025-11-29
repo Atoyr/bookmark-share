@@ -1,7 +1,7 @@
 import type { ServerSupabaseClient } from '@repo/supabase/server-client';
 import type { Bookmark } from '../types/bookmark';
 import type { Range } from '../types/range';
-import { bookmarkRowSchema, bookmarkRowTransformBookmark } from '../schemas/bookmark';
+import { bookmarkRowTransformBookmark } from '../schemas/bookmark';
 
 export interface BookmarkCollection {
   bookmarks: Bookmark[];

@@ -3,7 +3,7 @@ import {
   getBookmarksResponseSchema,
   postBookmarkRequestSchema,
   postBookmarkResponseSchema,
-} from '../schema/bookmark.schema';
+} from '../../schemas/bookmark.schema';
 
 export type GetBookmarksResponseDto = z.infer<typeof getBookmarksResponseSchema>;
 

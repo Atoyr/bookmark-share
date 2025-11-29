@@ -2,7 +2,7 @@ import { defineEventHandler } from 'h3';
 import { requireUser } from '../../auth/core/helpers';
 import { BookmarkRepository } from '../../repositories/bookmarkRepository';
 import type { PostBookmarkResponseDto } from '#shared/types/dto/bookmark.dto';
-import { postBookmarkRequestSchema } from '#shared/types/schema/bookmark.schema';
+import { postBookmarkRequestSchema } from '#shared/schemas/bookmark.schema';
 
 export default defineEventHandler(async (event): Promise<PostBookmarkResponseDto> => {
   await requireUser(event);
