@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 export const tagSchema = z.object({
-  id: z.string().uuid(),
+  id: z.uuid(),
   name: z.string(),
   color: z.string(),
 });

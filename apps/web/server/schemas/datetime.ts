@@ -17,7 +17,7 @@ export const updatedAtSchema = z.object({
 /**
  * created_atとupdated_atフィールドのzodスキーマ定義
  */
-export const createdAndUpdatedSchema = createdAtSchema.merge(updatedAtSchema);
+export const createdAndUpdatedSchema = createdAtSchema.extend(updatedAtSchema.shape);
 
 /**
  * deleted_atフィールドのzodスキーマ定義

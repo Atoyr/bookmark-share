@@ -3,13 +3,13 @@ import type { Bookmark } from '../types/bookmark';
 import { createdAndUpdatedSchema } from './datetime';
 
 export const bookmarkRowSchema = z.object({
-  id: z.string().uuid(),
+  id: z.uuid(),
   title: z.string(),
   description: z.string().nullable().optional(),
   url: z.string(),
 });
 
-export const bookmarkRowWithDatetimeSchema = bookmarkRowSchema.merge(createdAndUpdatedSchema);
+export const bookmarkRowWithDatetimeSchema = bookmarkRowSchema.extend(createdAndUpdatedSchema.shape);
 
 export const bookmarkRowTransformBookmark = bookmarkRowSchema.transform(
   (row): Bookmark => ({

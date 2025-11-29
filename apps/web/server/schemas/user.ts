@@ -3,12 +3,12 @@ import type { User } from '../types/user';
 import { createdAndUpdatedSchema } from './datetime';
 
 export const userRowSchema = z.object({
-  id: z.string().uuid(),
+  id: z.uuid(),
   name: z.string(),
   avatar: z.string().nullable().optional(),
 });
 
-export const userRowWithDatetimeSchema = userRowSchema.merge(createdAndUpdatedSchema);
+export const userRowWithDatetimeSchema = userRowSchema.extend(createdAndUpdatedSchema.shape);
 
 export const userRowTransformUser = userRowSchema.transform(
   (row): User => ({
