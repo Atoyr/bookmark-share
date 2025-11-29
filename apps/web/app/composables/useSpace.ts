@@ -1,6 +1,6 @@
 import { computed, unref, type MaybeRef } from 'vue';
 import type { SpaceDetail } from '~/types/spaceDetail';
-import type { GetSpaceDto } from '#shared/types/dto/spaces.dto';
+import type { GetSpaceResponseDto } from '#shared/types/dto/spaces.dto';
 
 export function useSpace(spaceId: string) {
   console.log('useSpace called with spaceId:', spaceId);
@@ -10,7 +10,7 @@ export function useSpace(spaceId: string) {
     return String(v ?? '');
   });
 
-  const { data, status, error, refresh } = useFetch<GetSpaceDto>(`/api/spaces/${id.value}`, { watch: [id] });
+  const { data, status, error, refresh } = useFetch<GetSpaceResponseDto>(`/api/spaces/${id.value}`, { watch: [id] });
 
   const space = computed<SpaceDetail | null>(() => {
     console.log('data.value', data.value);

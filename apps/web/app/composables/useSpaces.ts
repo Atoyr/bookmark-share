@@ -1,8 +1,8 @@
-import type { GetSpacesDto } from '#shared/types/dto/spaces.dto';
+import type { GetSpacesResponseDto } from '#shared/types/dto/spaces.dto';
 import type { Space } from '~/types/space';
 
 export const useSpaces = () => {
-  const { data, status, error, refresh } = useFetch<GetSpacesDto>('/api/spaces', {
+  const { data, status, error, refresh } = useFetch<GetSpacesResponseDto>('/api/spaces', {
     watch: false,
   });
   const spaces = computed<Space[]>(() => {
@@ -24,7 +24,7 @@ export const useSpaces = () => {
     if (data?.value == null) {
       return 0;
     }
-    return data.value.count;
+    return data.value.total;
   });
 
   return {
