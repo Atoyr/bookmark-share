@@ -3,6 +3,7 @@
   import { toTypedSchema } from '@vee-validate/zod';
   import { useForm } from 'vee-validate';
   import type { BookmarkModelValues } from './BookmarkFormModelValue';
+
   const props = defineProps<{
     modelValue: BookmarkModelValues, 
     onSubmit: (v: BookmarkModelValues) => void;
@@ -13,7 +14,7 @@
 
   const formSchema = toTypedSchema(
     z.object({
-      url: z.string().min(1).max(50),
+      url: z.url(), 
       title: z.string(),
     })
   );

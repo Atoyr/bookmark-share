@@ -5,7 +5,7 @@ import { createdAndUpdatedSchema } from './datetime';
 export const bookmarkSchema = z.object({
   id: z.uuid(),
   title: z.string(),
-  url: z.string(),
+  url: z.url(), 
   tags: z.array(tagSchema),
 });
 
