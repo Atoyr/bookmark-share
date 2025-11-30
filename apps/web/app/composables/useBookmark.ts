@@ -1,4 +1,4 @@
-import type { PostBookmarkRequestDto, PostBookmarkResponseDto } from '#shared/types/dto/bookmark.dto';
+import type { PostBookmarkRequestDto, PostBookmarkResponseDto } from '#shared/types/dto/bookmarks.dto';
 import type { Bookmark } from '~/types/bookmark';
 
 export const useBookmark = () => {

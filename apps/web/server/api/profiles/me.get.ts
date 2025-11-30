@@ -1,9 +1,10 @@
 import { defineEventHandler } from 'h3';
 import { requireUser } from '../../auth/core/helpers';
 import { UserRepository } from '../../repositories/userRepository';
-import type { UserDto } from '#shared/types/dto/user.dto';
+import type { GetMeResponseDto } from '#shared/types/dto/profiles.dto';
+import { stringToDate } from '#shared/schemas/codecs';
 
-export default defineEventHandler(async (event): Promise<UserDto> => {
+export default defineEventHandler(async (event): Promise<GetMeResponseDto> => {
   const authUser = await requireUser(event);
 
   const client = await getSupabaseServerClient(event);
@@ -34,6 +35,7 @@ export default defineEventHandler(async (event): Promise<UserDto> => {
     id: user.id,
     name: user.name,
     avatar: user.avatar,
-    updatedAt: user.updatedAt!,
+    created_at: stringToDate.encode(user.createdAt!),
+    updated_at: stringToDate.encode(user.updatedAt!),
   };
 });

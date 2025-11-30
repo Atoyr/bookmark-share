@@ -1,4 +1,4 @@
-import type { GetBookmarksResponseDto } from '#shared/types/dto/bookmark.dto';
+import type { GetBookmarksResponseDto } from '#shared/types/dto/bookmarks.dto';
 import type { Bookmark } from '~/types/bookmark';
 
 export interface UseBookmarksOptions {

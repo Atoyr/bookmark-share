@@ -4,14 +4,14 @@ import { z } from 'zod';
  * created_atフィールドのzodスキーマ定義
  */
 export const createdAtSchema = z.object({
-  created_at: z.string().transform((str) => new Date(str)),
+  created_at: z.iso.datetime(),
 });
 
 /**
  * updated_atフィールドのzodスキーマ定義
  */
 export const updatedAtSchema = z.object({
-  updated_at: z.string().transform((str) => new Date(str)),
+  updated_at: z.iso.datetime(),
 });
 
 /**
@@ -23,8 +23,5 @@ export const createdAndUpdatedSchema = createdAtSchema.extend(updatedAtSchema.sh
  * deleted_atフィールドのzodスキーマ定義
  */
 export const deletedAtSchema = z.object({
-  deleted_at: z
-    .string()
-    .transform((str) => new Date(str))
-    .nullable(),
+  deleted_at: z.iso.datetime().nullable(),
 });
