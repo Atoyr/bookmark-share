@@ -183,6 +183,10 @@ importers:
         version: 8.40.0(eslint@9.38.0(jiti@2.6.1))(typescript@5.9.2)
 
   packages/supabase:
+    dependencies:
+      zod:
+        specifier: ^4.1.13
+        version: 4.1.13
     devDependencies:
       '@supabase/supabase-js':
         specifier: 2.81.0
