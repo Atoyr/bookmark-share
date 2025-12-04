@@ -5,66 +5,91 @@
   import type { BookmarkModelValues } from './BookmarkFormModelValue';
 
   const props = defineProps<{
-    modelValue: BookmarkModelValues, 
+    modelValue: BookmarkModelValues;
     onSubmit: (v: BookmarkModelValues) => void;
   }>();
   const emit = defineEmits<{
     (e: 'update:modelValue', value: { url: string; title: string }): void;
+    (e: 'cancel:modelValue', value: { url: string; title: string }): void;
   }>();
 
   const formSchema = toTypedSchema(
     z.object({
-      url: z.url(), 
+      url: z.url(),
       title: z.string(),
     })
   );
 
-  const form = useForm({
+  const { handleSubmit, resetForm } = useForm({
     validationSchema: formSchema,
+    initialValues: {
+      url: '',
+      title: '',
+    },
   });
 
-  const handleSubmit = form.handleSubmit((values) => {
+  const onSubmit = handleSubmit((values) => {
     emit('update:modelValue', values); // v-model 更新
     props.onSubmit(values); // 呼び出し元の関数を実行
   });
+  const onCancel = () => {
+    resetForm();
+    emit('cancel:modelValue', { url: '', title: '' });
+  };
 </script>
 
 <template>
-  <form @submit="handleSubmit">
-    <ShadFormField
-      v-slot="{ componentField }"
-      name="url"
+  <div>
+    <form
+      id="form-bookmark"
+      @submit="onSubmit"
+      class="flex flex-col gap-4"
     >
-      <ShadFormItem>
-        <ShadFormLabel>url</ShadFormLabel>
-        <ShadFormControl>
-          <ShadInput
-            placeholder="url"
-            v-bind="componentField"
-          />
-        </ShadFormControl>
-        <ShadFormDescription> Input url. </ShadFormDescription>
-        <ShadFormMessage />
-      </ShadFormItem>
-    </ShadFormField>
-    <ShadFormField
-      v-slot="{ componentField }"
-      name="title"
-    >
-      <ShadFormItem>
-        <ShadFormLabel>title</ShadFormLabel>
-        <ShadFormControl>
-          <ShadInput
-            placeholder="title"
-            v-bind="componentField"
-          />
-        </ShadFormControl>
-        <ShadFormDescription> Input title. </ShadFormDescription>
-        <ShadFormMessage />
-      </ShadFormItem>
-    </ShadFormField>
-    <ShadButton type="submit">
-      Submit
-    </ShadButton>
-  </form>
+      <ShadFormField
+        v-slot="{ componentField }"
+        name="url"
+      >
+        <ShadFormItem>
+          <ShadFormLabel>url</ShadFormLabel>
+          <ShadFormControl>
+            <ShadInput
+              placeholder="url"
+              v-bind="componentField"
+            />
+          </ShadFormControl>
+          <ShadFormMessage />
+        </ShadFormItem>
+      </ShadFormField>
+      <ShadFormField
+        v-slot="{ componentField }"
+        name="title"
+      >
+        <ShadFormItem>
+          <ShadFormLabel>title</ShadFormLabel>
+          <ShadFormControl>
+            <ShadInput
+              placeholder="title"
+              v-bind="componentField"
+            />
+          </ShadFormControl>
+          <ShadFormMessage />
+        </ShadFormItem>
+      </ShadFormField>
+    </form>
+    <div class="flex gap-2 pt-2">
+      <ShadButton
+        type="submit"
+        form="form-bookmark"
+      >
+        Submit
+      </ShadButton>
+      <ShadButton
+        type="button"
+        variant="outline"
+        @click="onCancel"
+      >
+        cancel
+      </ShadButton>
+    </div>
+  </div>
 </template>
