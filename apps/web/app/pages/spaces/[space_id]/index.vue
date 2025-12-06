@@ -1,39 +1,50 @@
 <script setup lang="ts">
+  import { useForm } from 'vee-validate';
   import { useBreadcrumb } from '~/composables/useBreadcrumb';
   import { useSpace } from '~/composables/useSpace';
   import { useBookmark } from '@/composables/useBookmark';
   import { useBookmarks } from '@/composables/useBookmarks';
   import { columns } from '@/components/bookmarks';
   import DataTable from '@/components/DataTable.vue';
-  import { BookmarkForm } from '@/components/bookmark-form';
-  import type { BookmarkFormModelValues } from '@/components/bookmark-form';
+  import { BookmarkForm, BookmarkFormButtons } from '@/components/bookmark-form';
+  import { bookmarkFormTypedSchema } from '@/schemas/forms/bookmarkFormSchema';
+  import { BookmarkFormValues } from '@/types/fomrs/bookmarkFormValues';
 
   const route = useRoute();
 
   const breadcrumb = useBreadcrumb();
   const id = route.params.space_id as string;
   const { space } = useSpace(id);
-  const { bookmarks, total } = useBookmarks({space_id: id});
+  const { bookmarks, total } = useBookmarks({ space_id: id });
   const { create } = useBookmark();
 
   watchEffect(() => {
     breadcrumb.value = [{ label: 'Space List', href: '/spaces' }, { label: space.value?.name ?? '' }];
   });
 
-  const formValues = ref ({
-    url: "", 
-    title:""
-  } as BookmarkFormModelValues)
+  const form = useForm<BookmarkFormModelValues>({
+    validationSchema: bookmarkFormTypedSchema,
+  });
 
-const onSubmit = (values: BookmarkFormModelValues) => {
-  create(space.value!.id, values.url, values.title);
-};
+  function handleSubmit(values: BookmarkFormValues) {
+    console.log('handle submit');
+    create(space.value!.id, values.url, values.title);
+  }
+
+  function handleCancel() {
+    console.log('handle cancel');
+    form.resetForm();
+  }
 </script>
 
 <template>
   <p>{{ $route.params.space_id }}</p>
   <div class="px-2">
-    <BookmarkForm v-model="formValues" :onSubmit="onSubmit"/>
+    <BookmarkForm
+      :form="form"
+      @submitForm="handleSubmit"
+    />
+    <BookmarkFormButtons @cancel="handleCancel" />
     <p>total {{ total }}</p>
 
     <div class="container mx-auto py-10">

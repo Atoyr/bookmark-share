@@ -1,2 +1,2 @@
 export { default as BookmarkForm } from './BookmarkForm.vue';
-export type { BookmarkFormModelValues } from './BookmarkFormModelValue';
+export { default as BookmarkFormButtons } from './BookmarkFormButtons.vue';
