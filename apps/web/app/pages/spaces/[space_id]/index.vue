@@ -7,7 +7,7 @@
   import { columns } from '@/components/bookmarks';
   import DataTable from '@/components/DataTable.vue';
   import { Page } from '@/components/page';
-  import { BookmarkForm, BookmarkFormButtons } from '@/components/bookmark-form';
+  import { BookmarkFormDialog } from '@/components/bookmark-form';
   import { bookmarkFormTypedSchema } from '@/schemas/forms/bookmarkFormSchema';
   import { BookmarkFormValues } from '@/types/fomrs/bookmarkFormValues';
 
@@ -45,19 +45,22 @@
     <template #top>
       <h1 class="py-8 text-4xl font-bold">{{spaceName}}</h1>
     </template>
-    <BookmarkForm
-      :form="form"
-      @submitForm="handleSubmit"
-    />
-    <BookmarkFormButtons @cancel="handleCancel" />
-    <div class="container mx-auto py-10">
-      <DataTable
-        :columns="columns"
-        :data="bookmarks"
+    <div class="flex flex-col">
+      <ShadButton>NEW</ShadButton>
+      <BookmarkFormDialog 
+        :form="form"
+        @submitForm="handleSubmit"
+        @cancel="handleCancel"
       />
+      <div class="container mx-auto py-10">
+        <DataTable
+          :columns="columns"
+          :data="bookmarks"
+        />
 
-    <p>total {{ total }}</p>
+      <p>total {{ total }}</p>
 
+      </div>
     </div>
   </Page>
 </template>

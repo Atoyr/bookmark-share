@@ -196,7 +196,7 @@ importers:
         version: 11.0.0
       supabase:
         specifier: latest
-        version: 2.63.1
+        version: 2.65.6
 
 packages:
 
@@ -4122,8 +4122,8 @@ packages:
     engines: {npm: '>=8'}
     hasBin: true
 
-  supabase@2.63.1:
-    resolution: {integrity: sha512-VptpJrw8sSG8xE6Pda/jg5Vg2f3jt15nJZ0crPvRKGpYkMJi7EjPapbOonRxIH5JvTd98x+lshsLnKR2mkoTRA==}
+  supabase@2.65.6:
+    resolution: {integrity: sha512-PKeKFwIpx/H65WZ8BVqvQU1cve2n2Er++Yo0EGjSfV/vNwnLkpdnlpD9o8ZJJLDF/hxlduOCwxHiTnBimnbXdA==}
     engines: {npm: '>=8'}
     hasBin: true
 
@@ -9004,7 +9004,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  supabase@2.63.1:
+  supabase@2.65.6:
     dependencies:
       bin-links: 6.0.0
       https-proxy-agent: 7.0.6
