@@ -46,7 +46,6 @@
       <h1 class="py-8 text-4xl font-bold">{{spaceName}}</h1>
     </template>
     <div class="flex flex-col">
-      <ShadButton>NEW</ShadButton>
       <BookmarkFormDialog 
         :form="form"
         @submitForm="handleSubmit"
