@@ -27,12 +27,10 @@
   });
 
   function handleSubmit(values: BookmarkFormValues) {
-    console.log('handle submit');
     create(space.value!.id, values.url, values.title);
   }
 
   function handleCancel() {
-    console.log('handle cancel');
     form.resetForm();
   }
 </script>
