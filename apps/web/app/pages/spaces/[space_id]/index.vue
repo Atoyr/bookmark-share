@@ -6,6 +6,7 @@
   import { useBookmarks } from '@/composables/useBookmarks';
   import { columns } from '@/components/bookmarks';
   import DataTable from '@/components/DataTable.vue';
+  import { Page } from '@/components/page';
   import { BookmarkForm, BookmarkFormButtons } from '@/components/bookmark-form';
   import { bookmarkFormTypedSchema } from '@/schemas/forms/bookmarkFormSchema';
   import { BookmarkFormValues } from '@/types/fomrs/bookmarkFormValues';
@@ -18,8 +19,12 @@
   const { bookmarks, total } = useBookmarks({ space_id: id });
   const { create } = useBookmark();
 
+  const spaceName = ref('');
+
+
   watchEffect(() => {
     breadcrumb.value = [{ label: 'Space List', href: '/spaces' }, { label: space.value?.name ?? '' }];
+    spaceName.value = space.value?.name ?? '';
   });
 
   const form = useForm<BookmarkFormModelValues>({
@@ -36,20 +41,23 @@
 </script>
 
 <template>
-  <p>{{ $route.params.space_id }}</p>
-  <div class="px-2">
+  <Page>
+    <template #top>
+      <h1 class="py-8 text-4xl font-bold">{{spaceName}}</h1>
+    </template>
     <BookmarkForm
       :form="form"
       @submitForm="handleSubmit"
     />
     <BookmarkFormButtons @cancel="handleCancel" />
-    <p>total {{ total }}</p>
-
     <div class="container mx-auto py-10">
       <DataTable
         :columns="columns"
         :data="bookmarks"
       />
+
+    <p>total {{ total }}</p>
+
     </div>
-  </div>
+  </Page>
 </template>
