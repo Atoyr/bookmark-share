@@ -46,12 +46,16 @@
       <h1 class="py-8 text-4xl font-bold">{{spaceName}}</h1>
     </template>
     <div class="flex flex-col">
-      <BookmarkFormDialog 
-        :form="form"
-        @submitForm="handleSubmit"
-        @cancel="handleCancel"
-      />
-      <div class="container mx-auto py-10">
+      <div class="flex">
+        <div class="grow">
+        </div>
+        <BookmarkFormDialog 
+          :form="form"
+          @submitForm="handleSubmit"
+          @cancel="handleCancel"
+        />
+      </div>
+      <div class="container mx-auto py-2">
         <DataTable
           :columns="columns"
           :data="bookmarks"
