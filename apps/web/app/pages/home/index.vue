@@ -6,9 +6,7 @@
 
   const breadcrumb = useBreadcrumb();
   breadcrumb.value = [{ label: 'Home' }];
-  const { bookmarks, fetchBookmarks } = useBookmarks();
-  console.log('book', bookmarks);
-  await fetchBookmarks();
+  const { bookmarks, total } = useBookmarks({ });
 </script>
 
 <template>
