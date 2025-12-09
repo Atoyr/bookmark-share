@@ -24,7 +24,7 @@ describe('Tag.vue', () => {
     const wrapper = mount(Tag, { props: { name: 'Default' } })
 
     // base class の一部が含まれていること
-    expect(wrapper.classes()).toContain('flex')
+    expect(wrapper.classes()).toContain('inline-flex')
     expect(wrapper.classes()).toContain('rounded-full')
 
     // defaultVariants.color = 'gray'

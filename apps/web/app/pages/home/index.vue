@@ -4,9 +4,23 @@
   import { columns } from '@/components/bookmarks';
   import DataTable from '@/components/DataTable.vue';
 
+  import TagInput from '@/components/tag/TagInput.vue';
+  import type { TagValue } from '@/types/tag';
+
   const breadcrumb = useBreadcrumb();
   breadcrumb.value = [{ label: 'Home' }];
-  const { bookmarks, total } = useBookmarks({ });
+  const { bookmarks, total } = useBookmarks({});
+
+  const tags = ref<TagValue[]>([
+    {id: "1", name:"Vue", color:"red"}, 
+    {id: "2", name:"Nuxt", color:"green"}, 
+  ])
+
+  const defineTags = [
+  {id: "1", name:"Vue", color:"red"},
+  {id: "2", name:"Nuxt", color:"green"}, 
+  {id: "3", name:"hoge", color:"orange"}
+  ] as TagValue[]
 </script>
 
 <template>
@@ -18,6 +32,11 @@
         </h1>
       </div>
     </div>
+    <TagInput
+      v-model="tags"
+      :define-tags="defineTags"
+      placeholder="Add tags..."
+    />
     <div class="container mx-auto py-10">
       <DataTable
         :columns="columns"

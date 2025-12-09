@@ -3,13 +3,13 @@ import { cva } from 'class-variance-authority';
 
 export const tagVariants = cva(
   [
+    'inline-flex',
+    'items-center',
     'data-[state=active]:ring-ring',
     'ring-offset-background',
-    'flex',
     'h-5',
     'p-1',
     'gap-2',
-    'items-center',
     'rounded-full',
     'data-[state=active]:ring-2',
     'data-[state=active]:ring-offset-2',
