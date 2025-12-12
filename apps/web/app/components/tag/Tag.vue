@@ -7,13 +7,13 @@
   const props = defineProps<{
     id?: string;
     name: string;
-    closable?: boolean;
+    removable?: boolean;
     color?: TagVariants['color'];
     class?: HTMLAttributes['class'];
   }>();
 
   const emit = defineEmits<{
-    (e: 'close', id: string): void;
+    (e: 'remove', id: string): void;
   }>();
 </script>
 
@@ -21,10 +21,10 @@
   <div :class="cn(tagVariants({ color: props.color }), props.class)">
     <span class="p-1 text-xs">{{ name }}</span>
     <button
-      v-if="closable"
+      v-if="removable"
       type="button"
       class="ml-1 inline-flex h-4 w-4 items-center justify-center rounded-full text-xs hover:bg-muted focus:outline-none"
-      @click="$emit('close', props.id ?? '')"
+      @click="$emit('remove', props.id ?? '')"
       >
       ×
     </button>
