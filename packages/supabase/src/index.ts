@@ -1,5 +1,6 @@
 import { Database } from "./types.gen";
 export type { Database } from "./types.gen";
+export * from "./schemas";
 
 // spaces
 export type SpaceRow = Database["public"]["Tables"]["spaces"]["Row"];

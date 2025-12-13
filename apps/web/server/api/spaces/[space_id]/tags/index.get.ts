@@ -1,9 +1,10 @@
 import { defineEventHandler } from 'h3';
-import { requireUser } from '../../auth/core/helpers';
-import { SpaceRepository } from '../../repositories/spaceRepository';
-import type { GetSpaceResponseDto } from '#shared/types/dto/space.dto';
+import { requireUser } from '../../../../auth/core/helpers';
+import { SpaceRepository } from '../../../../repositories/spaceRepository';
+import type { GetSpaceResponseDto } from '#shared/types/dto/spaces.dto';
+import { stringToDate } from '#shared/schemas/codecs';
 
-
+// `GET /spaces/[space_id]/tags`はスペースに設定しているタグの一覧を取得する
 export default defineEventHandler(async (event): Promise<GetSpaceResponseDto> => {
   await requireUser(event);
 const id = getRouterParam(event, 'space_id') as string
@@ -39,8 +40,8 @@ const id = getRouterParam(event, 'space_id') as string
         name: member.name,
         avatar: member.avatar,
       })), 
-      createdAt: space.createdAt!,
-      updatedAt: space.updatedAt!,
+      updated_at: stringToDate.encode(space.updatedAt!),
     }
   }
 });
+

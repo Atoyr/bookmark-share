@@ -3,7 +3,7 @@
   import { toTypedSchema } from '@vee-validate/zod';
   import type { FormContext } from 'vee-validate';
   import { useForm } from 'vee-validate';
-  import { BookmarkFormValues } from '@/types/fomrs/bookmarkFormValues';
+  import { BookmarkFormValues } from '@/types/forms/bookmarkFormValues';
 
   const props = defineProps<{
     form: FormContext<BookmarkFormValues>;

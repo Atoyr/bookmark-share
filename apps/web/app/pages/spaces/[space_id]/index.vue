@@ -9,7 +9,7 @@
   import { Page } from '@/components/page';
   import { BookmarkFormDialog } from '@/components/bookmark-form';
   import { bookmarkFormTypedSchema } from '@/schemas/forms/bookmarkFormSchema';
-  import { BookmarkFormValues } from '@/types/fomrs/bookmarkFormValues';
+  import { BookmarkFormValues } from '@/types/forms/bookmarkFormValues';
 
   const route = useRoute();
 

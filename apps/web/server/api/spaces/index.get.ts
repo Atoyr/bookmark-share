@@ -19,7 +19,7 @@ export default defineEventHandler(async (event): Promise<GetSpacesResponseDto> =
   });
 
   return {
-    count: spaces.length,
+    total: spaces.length,
     spaces: spaces.map((space) => ({
       id: space.id,
       name: space.name,
