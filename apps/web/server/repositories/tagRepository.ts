@@ -1,6 +1,6 @@
 import type { ServerSupabaseClient } from '@repo/supabase/server-client';
 import { tagDefinitionsRowSchema } from '@repo/supabase';
-import type { Tag } from '../types/tag';
+import type { Tag, CreateOrUpdateTag } from '../types/tag';
 
 /**
  * Repository が満たすべきインターフェース
@@ -9,16 +9,18 @@ import type { Tag } from '../types/tag';
 export interface TagRepository {
   findBySpaceId(spaceId: string): Promise<Tag[]>;
   findById(id: string): Promise<Tag | null>;
+  newTagDefinition(tag: CreateOrUpdateTag, spaceId: string): Promise<Tag>;
+  newTagDefinitions(tags: CreateOrUpdateTag[], spaceId: string): Promise<Tag[]>;
 }
 
 export const tagDefinitionsRowTransformTag = tagDefinitionsRowSchema.transform(
   (row): Tag => ({
     id: row.id,
     name: row.name,
-    color: "", 
+    color: '',
+    updatedAt: row.updated_at ? new Date(row.updated_at) : undefined,
   })
 );
-
 
 /**
  * Supabase を使った実装
@@ -26,8 +28,6 @@ export const tagDefinitionsRowTransformTag = tagDefinitionsRowSchema.transform(
  */
 export class TagRepository implements TagRepository {
   constructor(private readonly client: ServerSupabaseClient) {}
-
-
 
   async findBySpaceId(spaceId: string): Promise<Tag[]> {
     const { data, error } = await this.client
@@ -37,9 +37,10 @@ export class TagRepository implements TagRepository {
         id, 
         space_id,
         name,
+        updated_at
         `
       )
-      .eq('space_id', spaceId)
+      .eq('space_id', spaceId);
 
     if (error) {
       throw error;
@@ -49,7 +50,7 @@ export class TagRepository implements TagRepository {
       return [];
     }
 
-    return tagDefinitionsRowTransformTag.parse(data);
+    return tagDefinitionsRowTransformTag.array().parse(data);
   }
 
   async findById(id: string): Promise<Tag | null> {
@@ -60,6 +61,7 @@ export class TagRepository implements TagRepository {
         id, 
         space_id,
         name,
+        updated_at
         `
       )
       .eq('id', id)
@@ -75,5 +77,57 @@ export class TagRepository implements TagRepository {
 
     return tagDefinitionsRowTransformTag.parse(data);
   }
-}
 
+  async newTagDefinition(tag: CreateOrUpdateTag, spaceId: string): Promise<Tag> {
+    const { data, error } = await this.client
+      .from('tag_definitions')
+      .insert({
+        name: tag.name,
+        space_id: spaceId,
+      })
+      .select(
+        `
+        id, 
+        space_id,
+        name,
+        updated_at
+        `
+      )
+      .single();
+
+    if (error) {
+      throw error;
+    }
+
+    return tagDefinitionsRowTransformTag.parse(data);
+  }
+
+  async newTagDefinitions(tags: CreateOrUpdateTag[], spaceId: string): Promise<Tag[]> {
+    const insertData = tags.map(tag => ({
+      name: tag.name,
+      space_id: spaceId,
+    }));
+
+    const { data, error } = await this.client
+      .from('tag_definitions')
+      .insert(insertData)
+      .select(
+        `
+        id, 
+        space_id,
+        name,
+        updated_at
+        `
+      );
+
+    if (error) {
+      throw error;
+    }
+
+    if (!data) {
+      return [];
+    }
+
+    return tagDefinitionsRowTransformTag.array().parse(data);
+  }
+}

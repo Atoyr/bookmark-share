@@ -1,24 +1,24 @@
 <script setup lang="ts">
   import { ref } from 'vue';
-  import Tag from './Tag.vue';
-  import type { TagValue } from '@/types/tag';
+  import TagItem from './TagItem.vue';
+  import type { Tag } from '@/types/tag';
   import { ChevronsUpDownIcon, CheckIcon } from 'lucide-vue-next';
 
   // props
   const props = defineProps<{
-    modelValue: TagValue[];
-    defineTags: TagValue[];
+    modelValue: Tag[];
+    defineTags: Tag[];
     placeholder?: string;
   }>();
 
   // emits
   const emit = defineEmits<{
-    (e: 'update:modelValue', value: TagValue[]): void;
+    (e: 'update:modelValue', value: Tag[]): void;
   }>();
 
   const open = ref(false);
 
-  const update = (tags: TagValue[]) => {
+  const update = (tags: Tag[]) => {
     emit('update:modelValue', tags);
   };
 
@@ -26,7 +26,7 @@
 
   const selectableTags = computed(() => props.defineTags.filter((tag) => !isSelected(tag.id)));
 
-  const toggleTag = (tag: TagValue) => {
+  const toggleTag = (tag: Tag) => {
     if (isSelected(tag.id)) {
       update(props.modelValue.filter((t) => t.id !== tag.id));
     } else {
@@ -54,7 +54,7 @@
           @mousedown.stop
           @click.stop
         >
-          <Tag
+          <TagItem
             :id="tag.id"
             :name="tag.name"
             :color="tag.color"
@@ -92,7 +92,7 @@
               @select="() => toggleTag(tag)"
             >
               <CheckIcon :class="['mr-2 h-4 w-4', isSelected(tag.id) ? 'opacity-100' : 'opacity-0']" />
-              <Tag
+              <TagItem
                 :key="tag.id"
                 :id="tag.id"
                 :name="tag.name"

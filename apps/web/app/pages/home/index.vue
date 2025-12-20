@@ -5,13 +5,13 @@
   import DataTable from '@/components/DataTable.vue';
 
   import TagInput from '@/components/tag/TagInput.vue';
-  import type { TagValue } from '@/types/tag';
+  import type { Tag } from '@/types/tag';
 
   const breadcrumb = useBreadcrumb();
   breadcrumb.value = [{ label: 'Home' }];
   const { bookmarks, total } = useBookmarks({});
 
-  const tags = ref<TagValue[]>([
+  const tags = ref<Tag[]>([
     {id: "1", name:"Vue", color:"red"}, 
     {id: "2", name:"Nuxt", color:"green"}, 
   ])
@@ -20,7 +20,7 @@
   {id: "1", name:"Vue", color:"red"},
   {id: "2", name:"Nuxt", color:"green"}, 
   {id: "3", name:"hoge", color:"orange"}
-  ] as TagValue[]
+  ] as Tag[]
 </script>
 
 <template>
