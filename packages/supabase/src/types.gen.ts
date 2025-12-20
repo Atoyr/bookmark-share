@@ -165,6 +165,7 @@ export type Database = {
       }
       tag_definitions: {
         Row: {
+          color: string
           created_at: string
           deleted_at: string | null
           id: string
@@ -173,6 +174,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          color: string
           created_at?: string
           deleted_at?: string | null
           id?: string
@@ -181,6 +183,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          color?: string
           created_at?: string
           deleted_at?: string | null
           id?: string
