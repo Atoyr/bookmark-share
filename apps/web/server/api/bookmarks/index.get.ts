@@ -12,7 +12,7 @@ export default defineEventHandler(async (event): Promise<GetBookmarksResponseDto
 
   const spaceId = query.space_id as string | undefined;
   const page = query.page ? parseInt(query.page as string, 10) : undefined;
-  const pageSize = query.pageSize ? parseInt(query.page as string, 10) : undefined;
+  const pageSize = query.pageSize ? parseInt(query.pageSize as string, 10) : undefined;
 
   const range = page && pageSize ? getRange(page, pageSize) : undefined;
 
