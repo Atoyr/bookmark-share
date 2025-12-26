@@ -18,13 +18,13 @@
 
   const open = ref(false);
 
+  // CommandInput をフォーカスしたい場合
+  const commandInputEl = ref<HTMLInputElement | null>(null);
+
   const update = (tags: Tag[]) => {
     emit('update:modelValue', tags);
   };
-
   const isSelected = (id: string) => props.modelValue.some((t) => t.id === id);
-
-  const selectableTags = computed(() => props.defineTags.filter((tag) => !isSelected(tag.id)));
 
   const toggleTag = (tag: Tag) => {
     if (isSelected(tag.id)) {
@@ -37,6 +37,27 @@
   const removeTag = (id: string) => {
     update(props.modelValue.filter((t) => t.id !== id));
   };
+
+  const selectableTags = computed(() => props.defineTags.filter((tag) => !isSelected(tag.id)));
+
+  // 閲覧→編集へ
+  const enterEdit = async () => {
+    editing.value = true;
+    open.value = true;
+    await nextTick();
+    commandInputEl.value?.focus();
+  };
+
+  // 編集終了（Popover閉じ）
+  const exitEdit = () => {
+    open.value = false;
+    editing.value = false;
+  };
+
+  // Popover が閉じたら編集モードも解除
+  watch(open, (v) => {
+    if (!v) editing.value = false;
+  });
 </script>
 
 <template>
@@ -44,39 +65,71 @@
     <!-- ここ全体がトリガー（Notion のセルっぽい部分） -->
     <ShadPopoverTrigger as-child>
       <div
-        class="focus-visible:ring-ring flex min-h-9 w-full cursor-text flex-wrap items-center gap-1 rounded-md border px-2 py-1 text-sm focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
+        role="button"
         tabindex="0"
+        class="flex w-full items-center gap-1 rounded-md border px-2 py-1.5 text-left text-sm"
+        :class="editing ? 'bg-background cursor-text' : 'bg-muted/30 hover:bg-muted/50'"
+        @click="!editing && enterEdit()"
+        @pointerdown="editing && (open = true)"
       >
-        <span
-          v-for="tag in modelValue"
-          :key="tag.id"
-          @pointerdown.stop
-          @mousedown.stop
-          @click.stop
-        >
-          <TagItem
-            :id="tag.id"
-            :name="tag.name"
-            :color="tag.color"
-            removable
-            @remove="removeTag"
-          />
-        </span>
+        <div class="flex flex-wrap items-center gap-1">
+          <!-- 編集モード -->
+          <template v-if="editing">
+            <span
+              v-for="tag in modelValue"
+              :key="tag.id"
+              @pointerdown.stop
+              @mousedown.stop
+              @click.stop
+            >
+              <TagItem
+                :tag="tag"
+                :name="tag.name"
+                :id="tag.id"
+                :color="tag.color"
+                removable
+                @remove="removeTag"
+              />
+            </span>
 
-        <span
-          v-if="modelValue.length === 0"
-          class="text-muted-foreground text-xs"
-        >
-          {{ placeholder ?? 'タグを選択または検索…' }}
-        </span>
+            <span
+              v-if="modelValue.length === 0"
+              class="text-muted-foreground text-xs"
+            >
+              {{ placeholder ?? 'タグを選択または検索…' }}
+            </span>
+          </template>
 
-        <ChevronsUpDownIcon class="ml-auto h-4 w-4 shrink-0 opacity-50" />
+          <!-- 閲覧モード -->
+          <template v-else>
+            <TagItem
+              v-for="tag in modelValue"
+              :key="tag.id"
+              :tag="tag"
+              :name="tag.name"
+                :color="tag.color"
+              :id="tag.id"
+            />
+            <span
+              v-if="modelValue.length === 0"
+              class="text-muted-foreground text-xs"
+            >
+              {{ placeholder ?? 'タグなし' }}
+            </span>
+          </template>
+        </div>
+
+        <ChevronsUpDownIcon class="ml-auto h-4 w-4 shrink-0 opacity-60" />
       </div>
     </ShadPopoverTrigger>
 
-    <ShadPopoverContent class="w-[260px] p-0">
+    <ShadPopoverContent
+      class="w-[260px] p-0"
+      @escape-key-down="exitEdit"
+    >
       <ShadCommand>
         <ShadCommandInput
+          ref="commandInputEl"
           class="h-9"
           placeholder="タグを検索…"
         />

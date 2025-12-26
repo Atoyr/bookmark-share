@@ -1,7 +1,7 @@
 import type { Bookmark } from '@/types/Bookmark';
 import type { ColumnDef } from '@tanstack/vue-table';
 import { h } from 'vue';
-import { default as Tag } from '@/components/tag/Tag.vue';
+import { default as TagItem } from '@/components/tag/TagItem.vue';
 import { ExternalLink } from 'lucide-vue-next';
 
 export const columns: ColumnDef<Bookmark>[] = [
@@ -33,7 +33,7 @@ export const columns: ColumnDef<Bookmark>[] = [
       return h(
         'div',
         { class: 'flex gap-1' },
-        tags.map((tag) => h(Tag, { name: tag.name, color: tag.color }))
+        tags.map((tag) => h(TagItem, { name: tag.name, color: tag.color }))
       );
     },
   },
