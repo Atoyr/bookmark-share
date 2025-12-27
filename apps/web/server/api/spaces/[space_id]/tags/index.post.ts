@@ -31,8 +31,8 @@ export default defineEventHandler(async (event): Promise<PostTagsResponseDto> =>
     .newTagDefinitions(
       result.data.tags.map((tag) => ({
         name: tag.name,
-        color: '',
-      })), 
+        color: tag.color,
+      })),
       spaceId
     )
     .catch((err) => {

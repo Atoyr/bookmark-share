@@ -18,9 +18,12 @@
 
   const defineTags = [
   {id: "1", name:"Vue", color:"red"},
-  {id: "2", name:"Nuxt", color:"green"}, 
+  {id: "2", name:"Nuxt", color:"green"},
   {id: "3", name:"hoge", color:"orange"}
   ] as Tag[]
+
+  // TODO: 実際のspace IDを取得する（例: useSpace()などのcomposableから）
+  const spaceId = '1bd384c9-12be-4799-a084-85e1759ba240'
 </script>
 
 <template>
@@ -35,6 +38,7 @@
     <TagInput
       v-model="tags"
       :define-tags="defineTags"
+      :space-id="spaceId"
       placeholder="Add tags..."
     />
     <div class="container mx-auto py-10">
