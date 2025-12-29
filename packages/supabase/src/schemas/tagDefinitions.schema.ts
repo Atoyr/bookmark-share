@@ -5,9 +5,9 @@ export const tagDefinitionsRowSchema = z.object({
   space_id: z.uuid(),
   name: z.string(),
   color: z.string(),
-  created_at: z.iso.datetime(),
-  updated_at: z.iso.datetime(),
-  deleted_at: z.iso.datetime().nullable().optional(),
+  created_at: z.iso.datetime({ offset: true }),
+  updated_at: z.iso.datetime({ offset: true }),
+  deleted_at: z.iso.datetime({ offset: true }).nullable().optional(),
 });
 
 export const tagDefinitionsInsertSchema = z.object({
@@ -15,9 +15,9 @@ export const tagDefinitionsInsertSchema = z.object({
   space_id: z.uuid(),
   name: z.string(),
   color: z.string(),
-  created_at: z.iso.datetime().optional(),
-  updated_at: z.iso.datetime().optional(),
-  deleted_at: z.iso.datetime().nullable().optional(),
+  created_at: z.iso.datetime({ offset: true }).optional(),
+  updated_at: z.iso.datetime({ offset: true }).optional(),
+  deleted_at: z.iso.datetime({ offset: true }).nullable().optional(),
 });
 
 export const tagDefinitionsUpdateSchema = z.object({
@@ -25,7 +25,7 @@ export const tagDefinitionsUpdateSchema = z.object({
   space_id: z.uuid().optional(),
   name: z.string().optional(),
   color: z.string().optional(),
-  created_at: z.iso.datetime().optional(),
-  updated_at: z.iso.datetime().optional(),
-  deleted_at: z.iso.datetime().nullable().optional(),
+  created_at: z.iso.datetime({ offset: true }).optional(),
+  updated_at: z.iso.datetime({ offset: true }).optional(),
+  deleted_at: z.iso.datetime({ offset: true }).nullable().optional(),
 });

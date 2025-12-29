@@ -13,6 +13,8 @@ erDiagram
     bookmarks ||--o{ bookmark_tags : ブックマークに紐付くタグ
     users ||--|{ spaces : スペースオーナー
     spaces ||--|{ space_users : スペースに所属するユーザー
+    users ||--|| space_users : スペースに所属するユーザー
+    tag_definitions }|--|{ space_users : "スペースに存在するユーザーのみ絞り込み (RLS)"
 
     users {
         uuid id PK
@@ -39,6 +41,7 @@ erDiagram
     space_users {
         uuid id PK
         uuid uid FK
+        uuid space_id FK
         datetime created_at
         datetime updated_at
     }

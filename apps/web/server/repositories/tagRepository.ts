@@ -119,6 +119,8 @@ export class TagRepository implements TagRepository {
         id,
         space_id,
         name,
+        color,
+        created_at, 
         updated_at
         `
       );
