@@ -5,9 +5,9 @@ export const bookmarksRowSchema = z.object({
   space_id: z.uuid(),
   title: z.string(),
   url: z.url(),
-  created_at: z.iso.datetime(),
-  updated_at: z.iso.datetime(),
-  deleted_at: z.iso.datetime().nullable().optional(),
+  created_at: z.iso.datetime({ offset: true }),
+  updated_at: z.iso.datetime({ offset: true }),
+  deleted_at: z.iso.datetime({ offset: true }).nullable().optional(),
 });
 
 export const bookmarksInsertSchema = z.object({
@@ -15,9 +15,9 @@ export const bookmarksInsertSchema = z.object({
   space_id: z.uuid(),
   title: z.string(),
   url: z.url(),
-  created_at: z.iso.datetime().optional(),
-  updated_at: z.iso.datetime().optional(),
-  deleted_at: z.iso.datetime().nullable().optional(),
+  created_at: z.iso.datetime({ offset: true }).optional(),
+  updated_at: z.iso.datetime({ offset: true }).optional(),
+  deleted_at: z.iso.datetime({ offset: true }).nullable().optional(),
 });
 
 export const bookmarksUpdateSchema = z.object({
@@ -25,7 +25,7 @@ export const bookmarksUpdateSchema = z.object({
   space_id: z.uuid().optional(),
   title: z.string().optional(),
   url: z.url().optional(),
-  created_at: z.iso.datetime().optional(),
-  updated_at: z.iso.datetime().optional(),
-  deleted_at: z.iso.datetime().nullable().optional(),
+  created_at: z.iso.datetime({ offset: true }).optional(),
+  updated_at: z.iso.datetime({ offset: true }).optional(),
+  deleted_at: z.iso.datetime({ offset: true }).nullable().optional(),
 });

@@ -6,9 +6,9 @@ export const spaceRowSchema = z.object({
   description: z.string(),
   owner_id: z.uuid(),
   image: z.string().nullable().optional(),
-  created_at: z.iso.datetime(),
-  updated_at: z.iso.datetime(),
-  deleted_at: z.iso.datetime().nullable().optional(),
+  created_at: z.iso.datetime({ offset: true }),
+  updated_at: z.iso.datetime({ offset: true }),
+  deleted_at: z.iso.datetime({ offset: true }).nullable().optional(),
 });
 
 export const spaceInsertSchema = z.object({
@@ -17,9 +17,9 @@ export const spaceInsertSchema = z.object({
   description: z.string(),
   owner_id: z.uuid(),
   image: z.string().nullable().optional(),
-  created_at: z.iso.datetime().optional(),
-  updated_at: z.iso.datetime().optional(),
-  deleted_at: z.iso.datetime().nullable().optional(),
+  created_at: z.iso.datetime({ offset: true }).optional(),
+  updated_at: z.iso.datetime({ offset: true }).optional(),
+  deleted_at: z.iso.datetime({ offset: true }).nullable().optional(),
 });
 
 export const spaceUpdateSchema = z.object({
@@ -28,7 +28,7 @@ export const spaceUpdateSchema = z.object({
   description: z.string().optional(),
   owner_id: z.uuid().optional(),
   image: z.string().nullable().optional(),
-  created_at: z.iso.datetime().optional(),
-  updated_at: z.iso.datetime().optional(),
-  deleted_at: z.iso.datetime().nullable().optional(),
+  created_at: z.iso.datetime({ offset: true }).optional(),
+  updated_at: z.iso.datetime({ offset: true }).optional(),
+  deleted_at: z.iso.datetime({ offset: true }).nullable().optional(),
 });
