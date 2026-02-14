@@ -1,196 +1,196 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+このファイルは、Claude Code (claude.ai/code) がこのリポジトリのコードを扱う際のガイダンスを提供します。
 
-## Project Overview
+## プロジェクト概要
 
-Bookmark-share is a web application for saving and sharing bookmarks with users in a space. Built with Nuxt 4 + Supabase in a Turbo monorepo.
+Bookmark-share は、スペース内のユーザーとブックマークを保存・共有するための Web アプリケーションです。Turbo モノレポで Nuxt 4 + Supabase を使用して構築されています。
 
-## Commands
+## コマンド
 
-### Development
+### 開発
 ```bash
-# Start Supabase (required before running the app)
+# Supabase を起動（アプリ実行前に必要）
 pnpm run supabase:start
 
-# Start dev server
+# 開発サーバーを起動
 pnpm run dev
 
-# Stop Supabase
+# Supabase を停止
 pnpm run supabase:stop
 ```
 
-### Testing
+### テスト
 ```bash
-# Run all tests
+# 全テストを実行
 pnpm run test
 
-# Run tests in apps/web
+# apps/web でテストを実行
 cd apps/web
-pnpm test              # Run once
-pnpm test:watch        # Watch mode
-pnpm test:ui           # With UI
+pnpm test              # 1回実行
+pnpm test:watch        # ウォッチモード
+pnpm test:ui           # UI付き
 ```
 
-Test projects are configured in `apps/web/vitest.config.ts`:
-- `unit`: `test/{e2e,unit}/*.{test,spec}.ts` (node environment)
-- `api`: `server/**/*.{test,spec}.ts` (nuxt environment)
-- `nuxt`: `test/nuxt/*.{test,spec}.ts`, `app/components/**/*.{test,spec}.ts` (nuxt environment)
+テストプロジェクトは `apps/web/vitest.config.ts` で設定されています：
+- `unit`: `test/{e2e,unit}/*.{test,spec}.ts`（node 環境）
+- `api`: `server/**/*.{test,spec}.ts`（nuxt 環境）
+- `nuxt`: `test/nuxt/*.{test,spec}.ts`, `app/components/**/*.{test,spec}.ts`（nuxt 環境）
 
-Coverage excludes: `nuxt.config.ts`, `app/components/ui/**`, `**/*.mjs`, `.nuxt/**`
+カバレッジ除外対象: `nuxt.config.ts`, `app/components/ui/**`, `**/*.mjs`, `.nuxt/**`
 
-### Database
+### データベース
 ```bash
-# Generate TypeScript types from local DB
+# ローカル DB から TypeScript 型を生成
 pnpm run db:gen:local
 
-# Database commands (run from packages/supabase)
+# データベースコマンド（packages/supabase から実行）
 cd packages/supabase
-pnpm run db:mig:new:local <name>     # Create migration
-pnpm run db:mig:up:local             # Apply migrations
-pnpm run db:diff:local <name>        # Generate migration diff
-pnpm run db:reset                    # Reset database
-pnpm run db:studio                   # Open Supabase Studio
+pnpm run db:mig:new:local <name>     # マイグレーション作成
+pnpm run db:mig:up:local             # マイグレーション適用
+pnpm run db:diff:local <name>        # マイグレーション差分を生成
+pnpm run db:reset                    # データベースリセット
+pnpm run db:studio                   # Supabase Studio を開く
 ```
 
-### Linting & Formatting
+### リント & フォーマット
 ```bash
 pnpm run lint          # ESLint
 pnpm run format        # Prettier
-pnpm run check-types   # TypeScript check
+pnpm run check-types   # TypeScript 型チェック
 ```
 
-### Build
+### ビルド
 ```bash
-pnpm run build         # Production build (via Turbo)
+pnpm run build         # プロダクションビルド（Turbo 経由）
 ```
 
-## Architecture
+## アーキテクチャ
 
 ```
 bookmark-share/
-├── apps/web/                  # Nuxt 4 application
+├── apps/web/                  # Nuxt 4 アプリケーション
 │   ├── app/
-│   │   ├── assets/            # Static assets (CSS)
-│   │   ├── components/        # Vue components
-│   │   │   ├── ui/            # shadcn-vue components (prefix: Shad)
-│   │   │   ├── app-sidebar/   # Main sidebar navigation
-│   │   │   ├── bookmark-form/ # Bookmark creation/edit form
-│   │   │   ├── bookmarks/     # Bookmarks listing
-│   │   │   ├── login-form/    # Login form
-│   │   │   └── ...            # avatar, page, tag, etc.
-│   │   ├── composables/       # Vue composables
-│   │   ├── layouts/           # Page layouts (default, guest)
-│   │   ├── lib/               # Utility functions (utils.ts)
-│   │   ├── pages/             # Route pages
-│   │   ├── plugins/           # Nuxt plugins (e.g., ssr-width)
-│   │   ├── schemas/forms/     # Zod + Vee-Validate form schemas
-│   │   ├── types/             # App-level TypeScript types
-│   │   └── utils/             # Utility helpers
+│   │   ├── assets/            # 静的アセット（CSS）
+│   │   ├── components/        # Vue コンポーネント
+│   │   │   ├── ui/            # shadcn-vue コンポーネント（プレフィックス: Shad）
+│   │   │   ├── app-sidebar/   # メインサイドバーナビゲーション
+│   │   │   ├── bookmark-form/ # ブックマーク作成/編集フォーム
+│   │   │   ├── bookmarks/     # ブックマーク一覧
+│   │   │   ├── login-form/    # ログインフォーム
+│   │   │   └── ...            # avatar, page, tag など
+│   │   ├── composables/       # Vue コンポーザブル
+│   │   ├── layouts/           # ページレイアウト（default, guest）
+│   │   ├── lib/               # ユーティリティ関数（utils.ts）
+│   │   ├── pages/             # ルートページ
+│   │   ├── plugins/           # Nuxt プラグイン（例: ssr-width）
+│   │   ├── schemas/forms/     # Zod + Vee-Validate フォームスキーマ
+│   │   ├── types/             # アプリレベルの TypeScript 型
+│   │   └── utils/             # ユーティリティヘルパー
 │   ├── server/
-│   │   ├── api/               # API routes (*.get.ts, *.post.ts)
-│   │   ├── auth/              # Auth provider system
-│   │   │   ├── core/factory.ts  # Provider factory (env-driven)
+│   │   ├── api/               # API ルート（*.get.ts, *.post.ts）
+│   │   ├── auth/              # 認証プロバイダーシステム
+│   │   │   ├── core/factory.ts  # プロバイダーファクトリ（環境変数駆動）
 │   │   │   ├── providers/     # supabase.ts, mock.ts
 │   │   │   └── helpers.ts     # getUser(), requireUser()
-│   │   ├── repositories/      # Database access layer
-│   │   ├── schemas/           # Server-side Zod schemas + transforms
-│   │   ├── types/             # Server-level TypeScript types
-│   │   └── usecases/          # Business logic services
-│   ├── shared/                # Shared between client and server
-│   │   ├── schemas/           # Zod validation schemas (mirrors API structure)
-│   │   └── types/dto/         # Data Transfer Objects (API request/response types)
-│   └── test/                  # E2E and Nuxt integration tests
+│   │   ├── repositories/      # データベースアクセス層
+│   │   ├── schemas/           # サーバーサイド Zod スキーマ + 変換
+│   │   ├── types/             # サーバーレベルの TypeScript 型
+│   │   └── usecases/          # ビジネスロジックサービス
+│   ├── shared/                # クライアントとサーバー間の共有
+│   │   ├── schemas/           # Zod バリデーションスキーマ（API 構造をミラー）
+│   │   └── types/dto/         # データ転送オブジェクト（API リクエスト/レスポンス型）
+│   └── test/                  # E2E および Nuxt 統合テスト
 └── packages/
-    ├── supabase/              # Supabase config, migrations, generated types
-    │   ├── src/types.gen.ts   # Auto-generated DB types
-    │   └── supabase/          # Supabase CLI config (config.toml, migrations/)
-    └── eslint-config/         # Shared ESLint config
+    ├── supabase/              # Supabase 設定、マイグレーション、生成された型
+    │   ├── src/types.gen.ts   # 自動生成された DB 型
+    │   └── supabase/          # Supabase CLI 設定（config.toml, migrations/）
+    └── eslint-config/         # 共有 ESLint 設定
 ```
 
-## Routes
+## ルート
 
-- `/` - Home page
-- `/login` - Login page
-- `/confirm` - Auth confirmation callback
-- `/dashboard` - Dashboard
-- `/bookmarks` - Bookmarks listing
-- `/bookmarks/[bookmark_id]` - Single bookmark view
-- `/spaces` - Spaces listing
-- `/spaces/[space_id]` - Space detail
-- `/spaces/[space_id]/setting` - Space settings
-- `/profile` - User profiles listing
-- `/profile/[user_id]` - User profile
-- `/profile/me` - Current user profile
+- `/` - ホームページ
+- `/login` - ログインページ
+- `/confirm` - 認証確認コールバック
+- `/dashboard` - ダッシュボード
+- `/bookmarks` - ブックマーク一覧
+- `/bookmarks/[bookmark_id]` - ブックマーク詳細
+- `/spaces` - スペース一覧
+- `/spaces/[space_id]` - スペース詳細
+- `/spaces/[space_id]/setting` - スペース設定
+- `/profile` - ユーザープロフィール一覧
+- `/profile/[user_id]` - ユーザープロフィール
+- `/profile/me` - 自分のプロフィール
 
-## Tech Stack
+## 技術スタック
 
-- **Frontend**: Nuxt 4, Vue 3, TypeScript
-- **UI**: shadcn-vue (New York style, prefix `Shad`), TailwindCSS 4, Lucide icons, reka-ui
-- **Tables**: @tanstack/vue-table
-- **Forms**: Vee-Validate + Zod (`toTypedSchema` from `@vee-validate/zod`)
-- **Utilities**: @vueuse/core, clsx, tailwind-merge, class-variance-authority
-- **Backend**: Supabase (PostgreSQL 15 with RLS)
-- **Build**: Turbo monorepo
-- **Package Manager**: pnpm 10.x
+- **フロントエンド**: Nuxt 4, Vue 3, TypeScript
+- **UI**: shadcn-vue（New York スタイル、プレフィックス `Shad`）, TailwindCSS 4, Lucide icons, reka-ui
+- **テーブル**: @tanstack/vue-table
+- **フォーム**: Vee-Validate + Zod（`@vee-validate/zod` の `toTypedSchema`）
+- **ユーティリティ**: @vueuse/core, clsx, tailwind-merge, class-variance-authority
+- **バックエンド**: Supabase（PostgreSQL 15 + RLS）
+- **ビルド**: Turbo モノレポ
+- **パッケージマネージャー**: pnpm 10.x
 - **Node**: >= 18
 
-## Key Patterns
+## 主要パターン
 
-### UI Components
-shadcn-vue components are in `apps/web/app/components/ui/` with the `Shad` prefix. Add new components via CLI:
+### UI コンポーネント
+shadcn-vue コンポーネントは `apps/web/app/components/ui/` に配置され、`Shad` プレフィックスを使用します。CLI で新しいコンポーネントを追加：
 ```bash
 npx shadcn-vue@latest add <component>
 ```
 
-### API Routes
-Server routes follow Nuxt conventions in `server/api/`. Tests are colocated (e.g., `index.get.ts` + `index.get.test.ts`).
+### API ルート
+サーバールートは `server/api/` で Nuxt の規約に従います。テストは同じディレクトリに配置されます（例: `index.get.ts` + `index.get.test.ts`）。
 
-API responses follow a consistent DTO pattern defined in `shared/types/dto/` (e.g., `bookmarks.dto.ts`, `spaces.dto.ts`). Pagination uses `getRange()` utility and returns `{ items, total, page, pageSize }` style responses.
+API レスポンスは `shared/types/dto/`（例: `bookmarks.dto.ts`, `spaces.dto.ts`）で定義された一貫した DTO パターンに従います。ページネーションは `getRange()` ユーティリティを使用し、`{ items, total, page, pageSize }` 形式のレスポンスを返します。
 
-### Server Architecture
+### サーバーアーキテクチャ
 
-**Repositories** (`server/repositories/`): Database access layer using dependency injection. Accept `ServerSupabaseClient` via constructor, interface-based design.
+**リポジトリ** (`server/repositories/`): 依存性注入を使用したデータベースアクセス層。コンストラクタで `ServerSupabaseClient` を受け取り、インターフェースベースの設計。
 
-**Use Cases** (`server/usecases/`): Business logic services (e.g., `bookmarkService.ts`, `profileService.ts`).
+**ユースケース** (`server/usecases/`): ビジネスロジックサービス（例: `bookmarkService.ts`, `profileService.ts`）。
 
-**Schemas** (`server/schemas/`): Server-side Zod schemas with transform functions (e.g., `bookmarkRowTransformBookmark` converts DB rows to domain types).
+**スキーマ** (`server/schemas/`): サーバーサイドの Zod スキーマと変換関数（例: `bookmarkRowTransformBookmark` は DB 行をドメイン型に変換）。
 
-### Shared Schemas and DTOs
-`apps/web/shared/` contains validation schemas and DTOs shared between client and server:
-- `shared/schemas/` - Zod schemas for API validation (mirrors `server/api/` structure)
-- `shared/types/dto/` - TypeScript DTOs for API request/response types (bookmarks, spaces, profiles, tags)
+### 共有スキーマと DTO
+`apps/web/shared/` にはクライアントとサーバー間で共有されるバリデーションスキーマと DTO が含まれます：
+- `shared/schemas/` - API バリデーション用 Zod スキーマ（`server/api/` の構造をミラー）
+- `shared/types/dto/` - API リクエスト/レスポンス型の TypeScript DTO（bookmarks, spaces, profiles, tags）
 
-### Database Types
-Auto-generated types from Supabase schema are in `packages/supabase/src/types.gen.ts`. Regenerate with `pnpm run db:gen:local` after schema changes. Exports row/insert/update types for each table (e.g., `SpaceRow`, `SpaceInsert`, `SpaceUpdate`).
+### データベース型
+Supabase スキーマから自動生成された型は `packages/supabase/src/types.gen.ts` にあります。スキーマ変更後は `pnpm run db:gen:local` で再生成してください。各テーブルの row/insert/update 型をエクスポートします（例: `SpaceRow`, `SpaceInsert`, `SpaceUpdate`）。
 
-The `@bookmark-share/supabase/server-client` export provides `ServerSupabaseClient` type and getter function for server-side use.
+`@bookmark-share/supabase/server-client` エクスポートは、サーバーサイドで使用する `ServerSupabaseClient` 型とゲッター関数を提供します。
 
-### Authentication
-Uses `@nuxtjs/supabase` module with a factory pattern for auth providers:
-- Provider is selected via `AUTH_PROVIDER` env var (`'supabase'` or `'mock'`)
-- Factory in `server/auth/core/factory.ts`
-- Helpers: `getUser()` returns User or null, `requireUser()` throws 401 if unauthenticated
-- Mock provider available for tests (`server/auth/providers/mock.ts`)
-- Override in tests with `__setAuthProviderForTests()`
+### 認証
+`@nuxtjs/supabase` モジュールを使用し、認証プロバイダーのファクトリパターンを採用：
+- プロバイダーは `AUTH_PROVIDER` 環境変数で選択（`'supabase'` または `'mock'`）
+- ファクトリは `server/auth/core/factory.ts`
+- ヘルパー: `getUser()` は User または null を返す、`requireUser()` は未認証の場合 401 をスロー
+- テスト用モックプロバイダーあり（`server/auth/providers/mock.ts`）
+- テストでのオーバーライドは `__setAuthProviderForTests()` を使用
 
-### Composables
-All composables in `app/composables/` wrap API calls with `useFetch` and return readonly computed values with refresh methods:
-- `useAuth` - Authentication state
-- `useBookmark` / `useBookmarks` - Bookmark operations and listings
-- `useSpace` / `useSpaces` - Space operations and listings
-- `useTag` / `useTags` - Tag operations and listings
-- `useProfile` - User profile
-- `useBreadcrumb` - Breadcrumb navigation
+### コンポーザブル
+`app/composables/` の全コンポーザブルは `useFetch` で API 呼び出しをラップし、読み取り専用の computed 値と refresh メソッドを返します：
+- `useAuth` - 認証状態
+- `useBookmark` / `useBookmarks` - ブックマーク操作と一覧
+- `useSpace` / `useSpaces` - スペース操作と一覧
+- `useTag` / `useTags` - タグ操作と一覧
+- `useProfile` - ユーザープロフィール
+- `useBreadcrumb` - パンくずナビゲーション
 
-### Environment Variables
-Supabase env sample at `packages/supabase/supabase/.env.sample`. Key variables:
+### 環境変数
+Supabase 環境変数のサンプルは `packages/supabase/supabase/.env.sample` にあります。主要な変数：
 - `SUPABASE_URL` / `PUBLIC_SUPABASE_URL` - Supabase API URL
-- `SUPABASE_ANON_KEY` / `PUBLIC_SUPABASE_ANON_KEY` - Supabase anonymous key
-- `SUPABASE_SERVICE_ROLE_KEY` - Service role key (server only)
-- `AUTH_PROVIDER` - Auth provider selection (`'supabase'` or `'mock'`)
-- `AUTH_GOOGLE_CLIENT_ID` / `AUTH_GOOGLE_CLIENT_SECRET` - Google OAuth (in Supabase env)
+- `SUPABASE_ANON_KEY` / `PUBLIC_SUPABASE_ANON_KEY` - Supabase 匿名キー
+- `SUPABASE_SERVICE_ROLE_KEY` - サービスロールキー（サーバー専用）
+- `AUTH_PROVIDER` - 認証プロバイダー選択（`'supabase'` または `'mock'`）
+- `AUTH_GOOGLE_CLIENT_ID` / `AUTH_GOOGLE_CLIENT_SECRET` - Google OAuth（Supabase 環境変数内）
 
-### Supabase Local Ports
+### Supabase ローカルポート
 - API: 54321
 - PostgreSQL: 54322
