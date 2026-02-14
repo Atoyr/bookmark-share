@@ -10,26 +10,20 @@
   const props = defineProps<{
     modelValue: Tag[];
     defineTags: Tag[];
-    spaceId: string;
     placeholder?: string;
   }>();
 
   // emits
   const emit = defineEmits<{
     (e: 'update:modelValue', value: Tag[]): void;
+    (e: 'create', value: string): void;
   }>();
 
   const open = ref(false);
   const editing = ref(false);
 
   // 検索文字列を管理
-  const searchValue = ref('');
-
-  // タグ作成用のcomposable
-  const { createTags } = useTags(props.spaceId);
-
-  // タグ作成中のローディング状態
-  const isCreating = ref(false);
+  const query = ref('');
 
   // CommandInput をフォーカスしたい場合
   const commandInputEl = ref<HTMLInputElement | null>(null);
@@ -51,6 +45,29 @@
     update(props.modelValue.filter((t) => t.id !== id));
   };
 
+  const selectableTags = computed(() => props.defineTags.filter((tag) => !isSelected(tag.id)));
+
+  // 検索で絞り込み（表示用）
+  const filteredTags = computed(() => {
+    const q = query.value.trim().toLowerCase();
+    if (!q) return selectableTags.value;
+    return selectableTags.value.filter((t) => t.name.toLowerCase().includes(q));
+  });
+
+  // 同名のタグが既にあるか（defineTags全体で判定）
+  const existsSameName = computed(() => {
+    const q = query.value.trim();
+    if (!q) return true;
+    return props.defineTags.some((t) => t.name === q);
+  });
+
+  // 作成候補を出す条件
+  const canCreate = computed(() => {
+    const q = query.value.trim();
+    return q.length > 0 && !existsSameName.value;
+  });
+
+  // TODO: tagVariantsから取得する
   // 利用可能な9色（tagVariants.tsで定義されている色）
   const AVAILABLE_COLORS = ['gray', 'brown', 'orange', 'yellow', 'green', 'blue', 'purple', 'pink', 'red'] as const;
 
@@ -60,65 +77,24 @@
     return AVAILABLE_COLORS[randomIndex];
   };
 
-  // 新しいタグを作成する関数
-  const createNewTag = async () => {
-    console.log('createNewTag開始 searchValue:', searchValue.value);
-
-    // 検索文字列が空の場合は何もしない
-    const tagName = searchValue.value.trim();
-    if (!tagName) {
-      console.log('タグ名が空のため中断');
-      return;
-    }
-
-    try {
-      // ローディング開始
-      isCreating.value = true;
-      console.log('タグ作成開始:', tagName);
-
-      // APIを呼び出してタグを作成
-      const response = await createTags({
-        tags: [{
-          name: tagName,
-          color: getRandomColor(),
-        }],
-      });
-
-      console.log('タグ作成成功:', response);
-
-      // 作成されたタグを取得（レスポンスの最初のタグ）
-      const newTag = response.tags[0];
-
-      // 作成されたタグを選択リストに追加
-      update([...props.modelValue, newTag]);
-
-      // 検索値をリセット
-      searchValue.value = '';
-
-      // Popoverを閉じる
-      open.value = false;
-    } catch (error) {
-      // エラーハンドリング（コンソールに出力）
-      console.error('タグの作成に失敗しました:', error);
-      // 本番環境ではトースト通知などを表示することを推奨
-    } finally {
-      // ローディング終了
-      isCreating.value = false;
-    }
+  const requestCreate = () => {
+    const name = query.value.trim();
+    if (!name) return;
+    emit('create', name); // ★作成依頼だけ
+    // UX: 依頼後はいったん閉じる/クリア（好みで）
+    query.value = '';
+    open.value = false;
+    editing.value = false;
   };
-
-  const selectableTags = computed(() => props.defineTags.filter((tag) => !isSelected(tag.id)));
 
   // 「新しいタグを作成」オプションを表示すべきか判定
   const shouldShowCreateOption = computed(() => {
     // 検索文字列が空なら表示しない
-    if (!searchValue.value.trim()) return false;
+    if (!query.value.trim()) return false;
 
     // 既存のタグに完全一致するものがあれば表示しない
-    const searchLower = searchValue.value.toLowerCase();
-    const hasExactMatch = props.defineTags.some(
-      (tag) => tag.name.toLowerCase() === searchLower
-    );
+    const searchLower = query.value.toLowerCase();
+    const hasExactMatch = props.defineTags.some((tag) => tag.name.toLowerCase() === searchLower);
 
     return !hasExactMatch;
   });
@@ -139,7 +115,7 @@
   const exitEdit = () => {
     open.value = false;
     editing.value = false;
-    searchValue.value = ''; // 検索値をリセット
+    query.value = ''; // 検索値をリセット
   };
 
   // Popover が閉じたら編集モードも解除
@@ -148,16 +124,36 @@
   });
 
   // Command内で動作するヘルパーコンポーネント
-  const SearchValueSync = defineComponent({
+  const QueryValueSync = defineComponent({
     emits: ['update'],
     setup(_, { emit }) {
       const { filterState } = useCommand();
-      watch(() => filterState.search, (newValue) => {
-        emit('update', newValue);
-      }, { immediate: true });
+      watch(
+        () => filterState.search,
+        (newValue) => {
+          emit('update', newValue);
+        },
+        { immediate: true }
+      );
       return () => null; // 何もレンダリングしない
-    }
+    },
   });
+
+  // 新しいタグを作成する関数
+  const createNewTag = async () => {
+    // 検索文字列が空の場合は何もしない
+    const tagName = query.value.trim();
+    if (!tagName) {
+      return;
+    }
+    emit('create', tagName); // 作成依頼だけ
+
+    // 検索値をリセット
+    query.value = '';
+
+    // Popoverを閉じる
+    open.value = false;
+  };
 </script>
 
 <template>
@@ -207,7 +203,7 @@
               :key="tag.id"
               :tag="tag"
               :name="tag.name"
-                :color="tag.color"
+              :color="tag.color"
               :id="tag.id"
             />
             <span
@@ -228,8 +224,8 @@
       @escape-key-down="exitEdit"
     >
       <ShadCommand>
-        <!-- filterStateを監視してsearchValueを更新するヘルパー -->
-        <SearchValueSync @update="(val: string) => searchValue = val" />
+        <!-- filterStateを監視してqueryValueを更新するヘルパー -->
+        <QueryValueSync @update="(val: string) => (query = val)" />
 
         <ShadCommandInput
           ref="commandInputEl"
@@ -237,29 +233,18 @@
           placeholder="タグを検索…"
         />
 
-        <!-- デバッグ情報（CommandListの外） -->
-        <div class="px-3 py-2 text-xs text-muted-foreground border-b">
-          検索値: "{{ searchValue }}" | 表示: {{ shouldShowCreateOption }} | 作成中: {{ isCreating }}
-        </div>
-
         <!-- 新しいタグを作成するオプション（CommandListの外に配置してフィルタリングを回避） -->
-        <div v-if="shouldShowCreateOption && !isCreating" class="border-b">
+        <div
+          v-if="shouldShowCreateOption && !isCreating"
+          class="border-b"
+        >
           <div
             role="option"
-            class="relative flex cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-accent hover:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
+            class="hover:bg-accent hover:text-accent-foreground relative flex cursor-pointer items-center rounded-sm px-2 py-1.5 text-sm outline-none select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
             @click="createNewTag"
           >
             <PlusIcon class="mr-2 h-4 w-4" />
-            <span class="text-sm">
-              「{{ searchValue }}」を作成
-            </span>
-          </div>
-        </div>
-
-        <!-- ローディング中の表示 -->
-        <div v-if="isCreating" class="border-b">
-          <div class="py-6 text-center text-sm text-muted-foreground">
-            タグを作成中...
+            <span class="text-sm"> 「{{ query }}」を作成 </span>
           </div>
         </div>
 
