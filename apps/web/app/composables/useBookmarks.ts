@@ -7,7 +7,7 @@ export interface UseBookmarksOptions {
   pageSize?: Ref<number>;
 }
 
-export const useBookmarks = (options: UseBookmarksOptions) => {
+export const useBookmarks = (options: UseBookmarksOptions = {}) => {
   const { page, pageSize, spaceId } = options;
   if ((page !== undefined) !== (pageSize !== undefined)) {
     throw new Error('Both page and pageSize must be provided together.');

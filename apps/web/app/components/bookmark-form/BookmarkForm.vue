@@ -5,6 +5,7 @@ import type { FormContext } from 'vee-validate';
 import { useForm } from 'vee-validate';
 import { BookmarkFormValues } from '@/types/forms/bookmarkFormValues';
 import TagInput from '@/components/tag/TagInput.vue';
+import { Loader2 } from 'lucide-vue-next';
 
 const props = defineProps<{
   form: FormContext<BookmarkFormValues>;
@@ -27,6 +28,34 @@ const onSubmit = (e: SubmitEvent) => {
 };
 
 const tags = ref<Tag[]>([]);
+const fetchingTitle = ref(false);
+
+const fetchMetaTitle = async () => {
+  const url = props.form.values.url;
+  const title = props.form.values.title;
+
+  // タイトルが既に入力されている場合はスキップ
+  if (title) return;
+
+  // URL が有効かチェック
+  const urlResult = z.url().safeParse(url);
+  if (!urlResult.success) return;
+
+  fetchingTitle.value = true;
+  try {
+    const response = await $fetch<{ title: string; url: string }>('/api/meta', {
+      query: { url },
+    });
+    // フェッチ中にユーザーがタイトルを入力していなければ設定
+    if (!props.form.values.title && response.title) {
+      props.form.setFieldValue('title', response.title);
+    }
+  } catch {
+    // メタデータ取得失敗時は何もしない（ユーザーが手動入力）
+  } finally {
+    fetchingTitle.value = false;
+  }
+};
 
 const createTag = (name: string) => {
   const newTag = emit('tag:create', name);
@@ -39,25 +68,37 @@ const createTag = (name: string) => {
   <form id="form-bookmark" @submit="onSubmit" class="flex flex-col gap-4">
     <ShadFormField v-slot="{ componentField }" name="url">
       <ShadFormItem>
-        <ShadFormLabel>url</ShadFormLabel>
+        <ShadFormLabel>URL</ShadFormLabel>
         <ShadFormControl>
-          <ShadInput placeholder="url" v-bind="componentField" />
+          <ShadInput
+            placeholder="https://example.com"
+            v-bind="componentField"
+            @blur="fetchMetaTitle"
+          />
         </ShadFormControl>
         <ShadFormMessage />
       </ShadFormItem>
     </ShadFormField>
     <ShadFormField v-slot="{ componentField }" name="title">
       <ShadFormItem>
-        <ShadFormLabel>title</ShadFormLabel>
+        <ShadFormLabel>
+          <span class="flex items-center gap-1">
+            タイトル
+            <Loader2 v-if="fetchingTitle" class="h-3 w-3 animate-spin" />
+          </span>
+        </ShadFormLabel>
         <ShadFormControl>
-          <ShadInput placeholder="title" v-bind="componentField" />
+          <ShadInput
+            placeholder="タイトルを入力（URLから自動取得されます）"
+            v-bind="componentField"
+          />
         </ShadFormControl>
         <ShadFormMessage />
       </ShadFormItem>
     </ShadFormField>
     <ShadFormField v-slot="{ componentField }" name="tags">
       <ShadFormItem>
-        <ShadFormLabel>tags</ShadFormLabel>
+        <ShadFormLabel>タグ</ShadFormLabel>
         <ShadFormControl>
           <TagInput v-model="tags" :define-tags="defineTags" @create="createTag" placeholder="Add tags..." />
         </ShadFormControl>

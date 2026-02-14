@@ -16,7 +16,8 @@
   const breadcrumb = useBreadcrumb();
   const id = route.params.space_id as string;
   const { space } = useSpace(id);
-  const { bookmarks, total } = useBookmarks({ space_id: id });
+  const spaceIdRef = ref(id);
+  const { bookmarks, total, refresh: refreshBookmarks } = useBookmarks({ spaceId: spaceIdRef });
   const { create } = useBookmark();
 
   const spaceName = ref('');
@@ -31,8 +32,10 @@
     validationSchema: bookmarkFormTypedSchema,
   });
 
-  function handleSubmit(values: BookmarkFormValues) {
-    create(space.value!.id, values.url, values.title);
+  async function handleSubmit(values: BookmarkFormValues) {
+    await create(space.value!.id, values.title, values.url);
+    form.resetForm();
+    refreshBookmarks();
   }
 
   function handleCancel() {
